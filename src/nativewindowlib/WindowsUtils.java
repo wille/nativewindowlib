@@ -61,8 +61,6 @@ public class WindowsUtils {
 			}
 		});
 
-		User32.INSTANCE.SetForegroundWindow(inflList.get(5).getHwnd());
-
 		return inflList;
 	}
 
