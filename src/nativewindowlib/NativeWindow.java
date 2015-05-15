@@ -97,7 +97,7 @@ public class NativeWindow {
 	}
 	
 	public boolean maximize() {
-		return User32.INSTANCE.ShowWindow(hwnd, 3);
+		return User32.INSTANCE.ShowWindow(hwnd, SW_MAXIMIZE);
 	}
 	
 	/**
