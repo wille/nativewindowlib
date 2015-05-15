@@ -6,20 +6,21 @@ import java.io.File;
 import javax.swing.Icon;
 import javax.swing.filechooser.FileSystemView;
 
+import com.sun.jna.Native;
+import com.sun.jna.Pointer;
+import com.sun.jna.ptr.IntByReference;
+
+import nativewindowlib.WindowsUtils.Kernel32;
 import nativewindowlib.WindowsUtils.NativeRectangle;
+import nativewindowlib.WindowsUtils.PsAPI;
+import nativewindowlib.WindowsUtils.User32;
 
 public class NativeWindow {
 
 	private int hwnd;
-	private NativeRectangle rect;
-	private String title;
-	private String process;
 
-	public NativeWindow(int hwnd, NativeRectangle rect, String title, String process) {
+	public NativeWindow(int hwnd) {
 		this.hwnd = hwnd;
-		this.rect = rect;
-		this.title = title;
-		this.process = process;
 	}
 
 	public int getHwnd() {
@@ -30,6 +31,9 @@ public class NativeWindow {
 	 * @return an java.awt.Rectangle for the RECT
 	 */
 	public Rectangle getRectangle() {
+		NativeRectangle rect = new NativeRectangle();
+		User32.INSTANCE.GetWindowRect(hwnd, rect);
+		
 		return new Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
 	}
 
@@ -37,6 +41,10 @@ public class NativeWindow {
 	 * @return the title of this window
 	 */
 	public String getTitle() {
+		byte[] buffer = new byte[1024];
+		User32.INSTANCE.GetWindowTextA(hwnd, buffer, buffer.length);
+		String title = Native.toString(buffer);
+		
 		return title;
 	}
 
@@ -44,14 +52,29 @@ public class NativeWindow {
 	 * @return if this window is minimized or not
 	 */
 	public boolean isMinimized() {
-		return rect.left <= -32000;
+		return getRectangle().x <= -32000;
+	}
+	
+	public String getProcess() {
+		byte[] buffer = new byte[1024];
+
+		Pointer zero = new Pointer(0);
+		IntByReference pid = new IntByReference();
+		User32.INSTANCE.GetWindowThreadProcessId(hwnd, pid);
+
+		Pointer ptr = Kernel32.INSTANCE.OpenProcess(1040, false, pid.getValue());
+		PsAPI.INSTANCE.GetModuleFileNameExA(ptr, zero, buffer, buffer.length);
+		
+		String process = Native.toString(buffer);
+		
+		return process;
 	}
 
 	/**
 	 * @return the process file icon, not the window icon
 	 */
 	public Icon getIcon() {
-		return FileSystemView.getFileSystemView().getSystemIcon(new File(process));
+		return FileSystemView.getFileSystemView().getSystemIcon(new File(getProcess()));
 	}
 
 	/**

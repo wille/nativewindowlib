@@ -32,23 +32,8 @@ public class WindowsUtils {
 		User32.INSTANCE.EnumWindows(new WndEnumProc() {
 			public boolean callback(int hWnd, int lParam) {
 				if (User32.INSTANCE.IsWindowVisible(hWnd)) {
-					NativeRectangle r = new NativeRectangle();
-					User32.INSTANCE.GetWindowRect(hWnd, r);
-					byte[] buffer = new byte[1024];
-					User32.INSTANCE.GetWindowTextA(hWnd, buffer, buffer.length);
-
-					byte[] buffer2 = new byte[1024];
-
-					Pointer zero = new Pointer(0);
-					IntByReference pid = new IntByReference();
-					User32.INSTANCE.GetWindowThreadProcessId(hWnd, pid);
-
-					Pointer ptr = Kernel32.INSTANCE.OpenProcess(1040, false, pid.getValue());
-					PsAPI.INSTANCE.GetModuleFileNameExA(ptr, zero, buffer2, buffer2.length);
-					
-					String title = Native.toString(buffer);
-					String process = Native.toString(buffer2);			
-					inflList.add(new NativeWindow(hWnd, r, title, process));
+						
+					inflList.add(new NativeWindow(hWnd));
 
 				}
 				return true;
