@@ -11,7 +11,7 @@ import com.sun.jna.Structure;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.win32.StdCallLibrary;
 
-public class WindowsUtils {
+public class WindowUtils {
 
 	/**
 	 * https://stackoverflow.com/questions/3188484/windows-how-to-get-a-list-of-all-visible-windows

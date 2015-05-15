@@ -10,7 +10,7 @@ Small library for working with native windows in Windows using JNA
 
 Loop through windows
 ```java
-List<NativeWindow> windows = WindowsUtils.getWindows();
+List<NativeWindow> windows = WindowUtils.getWindows();
 		    
 for (NativeWindow window : windows) {
 	if (window.getTitle().length() > 0) {
@@ -21,7 +21,7 @@ for (NativeWindow window : windows) {
 
 Minimize first window in list
 ```java
-List<NativeWindow> windows = WindowsUtils.getWindows();
+List<NativeWindow> windows = WindowUtils.getWindows();
 
 windows.get(0).minimize(); // maximize()....
 ```

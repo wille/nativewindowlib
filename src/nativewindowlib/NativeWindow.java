@@ -10,10 +10,10 @@ import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 
-import nativewindowlib.WindowsUtils.Kernel32;
-import nativewindowlib.WindowsUtils.NativeRectangle;
-import nativewindowlib.WindowsUtils.PsAPI;
-import nativewindowlib.WindowsUtils.User32;
+import nativewindowlib.WindowUtils.Kernel32;
+import nativewindowlib.WindowUtils.NativeRectangle;
+import nativewindowlib.WindowUtils.PsAPI;
+import nativewindowlib.WindowUtils.User32;
 
 public class NativeWindow {
 	
@@ -119,7 +119,7 @@ public class NativeWindow {
 	 * Brings this window to front using SetForegroundWindow
 	 */
 	public void bringToFront() {
-		WindowsUtils.User32.INSTANCE.SetForegroundWindow(hwnd);
+		WindowUtils.User32.INSTANCE.SetForegroundWindow(hwnd);
 	}
 
 }
