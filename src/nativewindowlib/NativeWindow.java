@@ -69,6 +69,14 @@ public class NativeWindow {
 		
 		return process;
 	}
+	
+	/**
+	 * Destroys the window
+	 * @return true if this succeeded
+	 */
+	public boolean close() {
+		return User32.INSTANCE.CloseWindow(hwnd);
+	}
 
 	/**
 	 * @return the process file icon, not the window icon
