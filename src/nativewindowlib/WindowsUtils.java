@@ -117,6 +117,15 @@ public class WindowsUtils {
 		 * @return
 		 */
 		public abstract boolean CloseWindow(int hWnd);
+		
+		/**
+		 * Closes the window
+		 * @param hWnd
+		 * @return
+		 */
+		public abstract boolean DestroyWindow(int hWnd);
+
+		public abstract boolean ShowWindow(int hWnd, int nCmdShow);
 	}
 
 	public static final int PROCESS_QUERY_INFORMATION = 0x0400;

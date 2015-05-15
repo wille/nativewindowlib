@@ -16,6 +16,20 @@ import nativewindowlib.WindowsUtils.PsAPI;
 import nativewindowlib.WindowsUtils.User32;
 
 public class NativeWindow {
+	
+	public static final int SW_FORCEMINIMIZE = 11;
+	public static final int SW_HIDE = 0;
+	public static final int SW_MAXIMIZE = 3;
+	public static final int SW_MINIMIZE = 6;
+	public static final int SW_RESTORE = 9;
+	public static final int SW_SHOW = 5;
+	public static final int SW_SHOWDEFAULT = 10;
+	public static final int SW_SHOWMAXIMIZED = 3;
+	public static final int SW_SHOWMINIMIZED = 2;
+	public static final int SW_SHOWMINNOACTIVE = 7;
+	public static final int SW_SHOWNA = 8;
+	public static final int SW_SHOWNOACTIVATE = 4;
+	public static final int SW_SHOWNORMAL = 1;
 
 	private int hwnd;
 
@@ -75,9 +89,17 @@ public class NativeWindow {
 	 * @return true if this succeeded
 	 */
 	public boolean close() {
-		return User32.INSTANCE.CloseWindow(hwnd);
+		return User32.INSTANCE.DestroyWindow(hwnd);
 	}
 
+	public boolean minimize() {
+		return User32.INSTANCE.CloseWindow(hwnd);
+	}
+	
+	public boolean maximize() {
+		return User32.INSTANCE.ShowWindow(hwnd, 3);
+	}
+	
 	/**
 	 * @return the process file icon, not the window icon
 	 */
