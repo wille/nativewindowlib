@@ -2,6 +2,6 @@
 
 Small library for working with native windows in Windows using JNA
 
-## Depenedencies
+## Dependencies
 
 - [jna](https://github.com/twall/jna)
