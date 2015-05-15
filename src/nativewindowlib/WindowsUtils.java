@@ -1,14 +1,9 @@
 package nativewindowlib;
 
-import java.awt.Rectangle;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import javax.swing.Icon;
-import javax.swing.filechooser.FileSystemView;
 
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
@@ -62,11 +57,11 @@ public class WindowsUtils {
 
 		Collections.sort(inflList, new Comparator<NativeWindow>() {
 			public int compare(NativeWindow o1, NativeWindow o2) {
-				return order.indexOf(o1.hwnd) - order.indexOf(o2.hwnd);
+				return order.indexOf(o1.getHwnd()) - order.indexOf(o2.getHwnd());
 			}
 		});
 
-		User32.INSTANCE.SetForegroundWindow(inflList.get(5).hwnd);
+		User32.INSTANCE.SetForegroundWindow(inflList.get(5).getHwnd());
 
 		return inflList;
 	}
@@ -136,60 +131,6 @@ public class WindowsUtils {
 			list.add("bottom");
 
 			return list;
-		}
-	}
-
-	public static class NativeWindow {
-
-		private int hwnd;
-		private NativeRectangle rect;
-		private String title;
-		private String process;
-
-		public NativeWindow(int hwnd, NativeRectangle rect, String title, String process) {
-			this.hwnd = hwnd;
-			this.rect = rect;
-			this.title = title;
-			this.process = process;
-		}
-		
-		public int getHwnd() {
-			return hwnd;
-		}
-
-		/**
-		 * @return an java.awt.Rectangle for the RECT
-		 */
-		public Rectangle getRectangle() {
-			return new Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
-		}
-
-		/**
-		 * @return the title of this window
-		 */
-		public String getTitle() {
-			return title;
-		}
-
-		/**
-		 * @return if this window is minimized or not
-		 */
-		public boolean isMinimized() {
-			return rect.left <= -32000;
-		}
-
-		/**
-		 * @return the process file icon, not the window icon
-		 */
-		public Icon getIcon() {
-			return FileSystemView.getFileSystemView().getSystemIcon(new File(process));
-		}
-
-		/**
-		 * Brings this window to front using SetForegroundWindow
-		 */
-		public void bringToFront() {
-			WindowsUtils.User32.INSTANCE.SetForegroundWindow(hwnd);			
 		}
 	}
 }
