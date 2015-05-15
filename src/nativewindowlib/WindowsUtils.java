@@ -60,20 +60,53 @@ public class WindowsUtils {
 
 		public static final int GW_HWNDNEXT = 2;
 
+		/**
+		 * Enumerate all native windows
+		 * @param wndenumproc
+		 * @param lParam
+		 * @return
+		 */
 		public abstract boolean EnumWindows(WndEnumProc wndenumproc, int lParam);
 
+		/**
+		 * Is window visible (only show windows that is)
+		 * @param hWnd
+		 * @return
+		 */
 		public abstract boolean IsWindowVisible(int hWnd);
 
+		/**
+		 * Gets window position
+		 * @param hWnd
+		 * @param r
+		 * @return
+		 */
 		public abstract int GetWindowRect(int hWnd, NativeRectangle r);
 
+		/**
+		 * Gets window title
+		 * @param hWnd
+		 * @param buffer
+		 * @param buflen
+		 */
 		public abstract void GetWindowTextA(int hWnd, byte[] buffer, int buflen);
 
 		public abstract int GetWindowThreadProcessId(int hWnd);
 
+		/**
+		 * Gets window on top
+		 * @param hWnd
+		 * @return
+		 */
 		public abstract int GetTopWindow(int hWnd);
 
 		public abstract int GetWindow(int hWnd, int flag);
 
+		/**
+		 * Set focus on window
+		 * @param hWnd
+		 * @return
+		 */
 		public abstract int SetForegroundWindow(int hWnd);
 
 		public abstract int GetWindowThreadProcessId(int hWnd, IntByReference pid);
