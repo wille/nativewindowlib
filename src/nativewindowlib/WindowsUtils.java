@@ -2,7 +2,6 @@ package nativewindowlib;
 
 import java.awt.Rectangle;
 import java.io.File;
-import java.lang.annotation.Native;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -10,6 +9,12 @@ import java.util.List;
 
 import javax.swing.Icon;
 import javax.swing.filechooser.FileSystemView;
+
+import com.sun.jna.Native;
+import com.sun.jna.Pointer;
+import com.sun.jna.Structure;
+import com.sun.jna.ptr.IntByReference;
+import com.sun.jna.win32.StdCallLibrary;
 
 public class WindowsUtils {
 
