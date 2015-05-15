@@ -91,11 +91,19 @@ public class NativeWindow {
 	public boolean close() {
 		return User32.INSTANCE.DestroyWindow(hwnd);
 	}
-
+	
+	/**
+	 * Minimizes the window
+	 * @return true if this succeeded
+	 */
 	public boolean minimize() {
 		return User32.INSTANCE.CloseWindow(hwnd);
 	}
 	
+	/**
+	 * Maximizes the window
+	 * @return true if this succeeded
+	 */
 	public boolean maximize() {
 		return User32.INSTANCE.ShowWindow(hwnd, SW_MAXIMIZE);
 	}
