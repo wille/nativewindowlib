@@ -140,6 +140,14 @@ public final class WindowUtils {
 		 * @param buflen
 		 */
 		public abstract void GetWindowTextA(int hWnd, byte[] buffer, int buflen);
+		
+		/**
+		 * Sets window title
+		 * @param hWnd
+		 * @param text
+		 * @return
+		 */
+		public abstract boolean SetWindowTextA(int hWnd, String text);
 
 		public abstract int GetWindowThreadProcessId(int hWnd);
 

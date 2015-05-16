@@ -6,14 +6,14 @@ import java.io.File;
 import javax.swing.Icon;
 import javax.swing.filechooser.FileSystemView;
 
-import com.sun.jna.Native;
-import com.sun.jna.Pointer;
-import com.sun.jna.ptr.IntByReference;
-
 import nativewindowlib.WindowUtils.Kernel32;
 import nativewindowlib.WindowUtils.NativeRectangle;
 import nativewindowlib.WindowUtils.PsAPI;
 import nativewindowlib.WindowUtils.User32;
+
+import com.sun.jna.Native;
+import com.sun.jna.Pointer;
+import com.sun.jna.ptr.IntByReference;
 
 public class NativeWindow {
 	
@@ -108,6 +108,15 @@ public class NativeWindow {
 		User32.INSTANCE.GetWindowRect(hwnd, rect);
 		
 		return new Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
+	}
+	
+	/**
+	 * Sets the title of this window
+	 * @param title
+	 * @return true if this operation succeeded
+	 */
+	public boolean setTitle(String title) {
+		return User32.INSTANCE.SetWindowTextA(hwnd, title);
 	}
 
 	/**
