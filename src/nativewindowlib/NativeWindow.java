@@ -36,9 +36,68 @@ public class NativeWindow {
 	public NativeWindow(int hwnd) {
 		this.hwnd = hwnd;
 	}
-
+	
+	/**
+	 * Destroys the window
+	 * @return true if this succeeded
+	 */
+	public boolean close() {
+		return User32.INSTANCE.DestroyWindow(hwnd);
+	}
+	
+	/**
+	 * Minimizes the window
+	 * @return true if this succeeded
+	 */
+	public boolean minimize() {
+		return User32.INSTANCE.CloseWindow(hwnd);
+	}
+	
+	/**
+	 * @return if this window is minimized or not
+	 */
+	public boolean isMinimized() {
+		return getRectangle().x <= -32000;
+	}
+	
+	/**
+	 * Maximizes the window
+	 * @return true if this succeeded
+	 */
+	public boolean maximize() {
+		return User32.INSTANCE.ShowWindow(hwnd, SW_MAXIMIZE);
+	}
+	
+	/**
+	 * Brings this window to front using SetForegroundWindow
+	 */
+	public void bringToFront() {
+		WindowUtils.User32.INSTANCE.SetForegroundWindow(hwnd);
+	}
+	
+	/**
+	 * Sets this window either visible or invisible
+	 * @param visible state of the window
+	 * @return true if this succeeded
+	 */
+	public boolean setVisible(boolean visible) {
+		return User32.INSTANCE.ShowWindow(hwnd, visible ? SW_SHOW : SW_HIDE);
+	}
+	
+	/**
+	 * Should always be checked, if false, you might want to ignore it
+	 * @return true if this window is visible
+	 */
+	public boolean isVisible() {
+		return User32.INSTANCE.IsWindowVisible(hwnd);
+	}
+	
 	public int getHwnd() {
 		return hwnd;
+	}
+	
+	public boolean setRectangle(Rectangle rect) {
+		return User32.INSTANCE.MoveWindow(hwnd, rect.x, rect.y, rect.width, rect.height, true);
 	}
 
 	/**
@@ -61,13 +120,6 @@ public class NativeWindow {
 		
 		return title;
 	}
-
-	/**
-	 * @return if this window is minimized or not
-	 */
-	public boolean isMinimized() {
-		return getRectangle().x <= -32000;
-	}
 	
 	public String getProcess() {
 		byte[] buffer = new byte[1024];
@@ -85,49 +137,10 @@ public class NativeWindow {
 	}
 	
 	/**
-	 * Destroys the window
-	 * @return true if this succeeded
-	 */
-	public boolean close() {
-		return User32.INSTANCE.DestroyWindow(hwnd);
-	}
-	
-	/**
-	 * Minimizes the window
-	 * @return true if this succeeded
-	 */
-	public boolean minimize() {
-		return User32.INSTANCE.CloseWindow(hwnd);
-	}
-	
-	/**
-	 * Maximizes the window
-	 * @return true if this succeeded
-	 */
-	public boolean maximize() {
-		return User32.INSTANCE.ShowWindow(hwnd, SW_MAXIMIZE);
-	}
-	
-	/**
 	 * @return the process file icon, not the window icon
 	 */
 	public Icon getIcon() {
 		return FileSystemView.getFileSystemView().getSystemIcon(new File(getProcess()));
-	}
-
-	/**
-	 * Brings this window to front using SetForegroundWindow
-	 */
-	public void bringToFront() {
-		WindowUtils.User32.INSTANCE.SetForegroundWindow(hwnd);
-	}
-	
-	/**
-	 * Should always be checked, if false, you might want to ignore it
-	 * @return
-	 */
-	public boolean isVisible() {
-		return User32.INSTANCE.IsWindowVisible(hwnd);
 	}
 	
 	@Override

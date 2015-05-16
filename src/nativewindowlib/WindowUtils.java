@@ -122,6 +122,18 @@ public final class WindowUtils {
 		public abstract int GetWindowRect(int hWnd, NativeRectangle r);
 
 		/**
+		 * Moves window position
+		 * @param hWnd
+		 * @param X
+		 * @param Y
+		 * @param nWidth
+		 * @param nHeight
+		 * @param bRepaint
+		 * @return
+		 */
+		public abstract boolean MoveWindow(int hWnd, int X, int Y, int nWidth, int nHeight, boolean bRepaint);
+
+		/**
 		 * Gets window title
 		 * @param hWnd
 		 * @param buffer
@@ -163,6 +175,12 @@ public final class WindowUtils {
 		 */
 		public abstract boolean DestroyWindow(int hWnd);
 
+		/**
+		 * Changes state of the window
+		 * @param hWnd
+		 * @param nCmdShow
+		 * @return
+		 */
 		public abstract boolean ShowWindow(int hWnd, int nCmdShow);
 	}
 
