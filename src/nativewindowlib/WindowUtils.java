@@ -11,7 +11,7 @@ import com.sun.jna.Structure;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.win32.StdCallLibrary;
 
-public class WindowUtils {
+public final class WindowUtils {
 
 	/**
 	 * https://stackoverflow.com/questions/3188484/windows-how-to-get-a-list-of-all-visible-windows
@@ -43,6 +43,48 @@ public class WindowUtils {
 		});
 
 		return inflList;
+	}
+	
+	/**
+	 * Finds all windows and checks which are visible
+	 * @return all visible windows.
+	 */
+	public static List<NativeWindow> getVisibleWindows() {
+		List<NativeWindow> visible = new ArrayList<NativeWindow>();
+		List<NativeWindow> windows = WindowUtils.getWindows();
+
+		for (NativeWindow w : windows) {
+			if (w.isVisible()) {
+				visible.add(w);
+			}
+		}
+		
+		return visible;
+	}
+
+	/**
+	 * Finds all windows and searches for a matching title
+	 * @param title the title to search for
+	 * @return the window with the title that has been searched for, or null if not found.
+	 */
+	public static NativeWindow getByTitle(String title) {
+		NativeWindow window = null;
+		List<NativeWindow> windows = WindowUtils.getWindows();
+
+		for (NativeWindow w : windows) {
+			if (w.getTitle().equals(title)) {
+				window = w;
+				break;
+			}
+		}
+		
+		return window;
+	}
+	
+	/**
+	 * Prevent instantiation
+	 */
+	private WindowUtils() {
 	}
 
 	public static interface WndEnumProc extends StdCallLibrary.StdCallCallback {
