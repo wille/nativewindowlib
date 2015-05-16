@@ -129,5 +129,18 @@ public class NativeWindow {
 	public boolean isVisible() {
 		return User32.INSTANCE.IsWindowVisible(hwnd);
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("NativeWindow[Hwnd=").append(getHwnd());
+		builder.append(", Title=").append(getTitle());
+		builder.append(", Process=").append(getProcess());
+		builder.append(", Minimized=").append(isMinimized());
+		builder.append(", Visible=").append(isVisible());
+		builder.append("]");
+		
+		return builder.toString();
+	}
 
 }
