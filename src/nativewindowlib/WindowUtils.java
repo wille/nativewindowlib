@@ -11,7 +11,7 @@ import com.sun.jna.Structure;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.win32.StdCallLibrary;
 
-public class WindowUtils {
+public final class WindowUtils {
 
 	/**
 	 * https://stackoverflow.com/questions/3188484/windows-how-to-get-a-list-of-all-visible-windows
@@ -44,6 +44,38 @@ public class WindowUtils {
 
 		return inflList;
 	}
+	
+	/**
+	 * Finds all windows and checks which are visible
+	 * @return all visible windows.
+	 */
+	public static List<NativeWindow> getVisibleWindows() {
+		List<NativeWindow> visible = new ArrayList<NativeWindow>();
+		List<NativeWindow> windows = WindowUtils.getWindows();
+
+		for (NativeWindow w : windows) {
+			if (w.isVisible()) {
+				visible.add(w);
+			}
+		}
+		
+		return visible;
+	}
+
+	/**
+	 * Finds all windows and searches for a matching title
+	 * @param title the title to search for
+	 * @return the window with the title that has been searched for, or null if not found.
+	 */
+	public static NativeWindow getByTitle(String title) {
+		return new NativeWindow(User32.INSTANCE.FindWindowA(null, title));
+	}
+	
+	/**
+	 * Prevent instantiation
+	 */
+	private WindowUtils() {
+	}
 
 	public static interface WndEnumProc extends StdCallLibrary.StdCallCallback {
 
@@ -63,6 +95,8 @@ public class WindowUtils {
 		 * @return
 		 */
 		public abstract boolean EnumWindows(WndEnumProc wndenumproc, int lParam);
+		
+		public abstract int FindWindowA(String lpClassName, String lpWindowName);
 
 		/**
 		 * Is window visible (only show windows that is)
@@ -80,12 +114,32 @@ public class WindowUtils {
 		public abstract int GetWindowRect(int hWnd, NativeRectangle r);
 
 		/**
+		 * Moves window position
+		 * @param hWnd
+		 * @param X
+		 * @param Y
+		 * @param nWidth
+		 * @param nHeight
+		 * @param bRepaint
+		 * @return
+		 */
+		public abstract boolean MoveWindow(int hWnd, int X, int Y, int nWidth, int nHeight, boolean bRepaint);
+
+		/**
 		 * Gets window title
 		 * @param hWnd
 		 * @param buffer
 		 * @param buflen
 		 */
 		public abstract void GetWindowTextA(int hWnd, byte[] buffer, int buflen);
+		
+		/**
+		 * Sets window title
+		 * @param hWnd
+		 * @param text
+		 * @return
+		 */
+		public abstract boolean SetWindowTextA(int hWnd, String text);
 
 		public abstract int GetWindowThreadProcessId(int hWnd);
 
@@ -121,6 +175,12 @@ public class WindowUtils {
 		 */
 		public abstract boolean DestroyWindow(int hWnd);
 
+		/**
+		 * Changes state of the window
+		 * @param hWnd
+		 * @param nCmdShow
+		 * @return
+		 */
 		public abstract boolean ShowWindow(int hWnd, int nCmdShow);
 	}
 

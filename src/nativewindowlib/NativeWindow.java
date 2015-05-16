@@ -6,14 +6,14 @@ import java.io.File;
 import javax.swing.Icon;
 import javax.swing.filechooser.FileSystemView;
 
-import com.sun.jna.Native;
-import com.sun.jna.Pointer;
-import com.sun.jna.ptr.IntByReference;
-
 import nativewindowlib.WindowUtils.Kernel32;
 import nativewindowlib.WindowUtils.NativeRectangle;
 import nativewindowlib.WindowUtils.PsAPI;
 import nativewindowlib.WindowUtils.User32;
+
+import com.sun.jna.Native;
+import com.sun.jna.Pointer;
+import com.sun.jna.ptr.IntByReference;
 
 public class NativeWindow {
 	
@@ -36,53 +36,6 @@ public class NativeWindow {
 	public NativeWindow(int hwnd) {
 		this.hwnd = hwnd;
 	}
-
-	public int getHwnd() {
-		return hwnd;
-	}
-
-	/**
-	 * @return an java.awt.Rectangle for the RECT
-	 */
-	public Rectangle getRectangle() {
-		NativeRectangle rect = new NativeRectangle();
-		User32.INSTANCE.GetWindowRect(hwnd, rect);
-		
-		return new Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
-	}
-
-	/**
-	 * @return the title of this window
-	 */
-	public String getTitle() {
-		byte[] buffer = new byte[1024];
-		User32.INSTANCE.GetWindowTextA(hwnd, buffer, buffer.length);
-		String title = Native.toString(buffer);
-		
-		return title;
-	}
-
-	/**
-	 * @return if this window is minimized or not
-	 */
-	public boolean isMinimized() {
-		return getRectangle().x <= -32000;
-	}
-	
-	public String getProcess() {
-		byte[] buffer = new byte[1024];
-
-		Pointer zero = new Pointer(0);
-		IntByReference pid = new IntByReference();
-		User32.INSTANCE.GetWindowThreadProcessId(hwnd, pid);
-
-		Pointer ptr = Kernel32.INSTANCE.OpenProcess(1040, false, pid.getValue());
-		PsAPI.INSTANCE.GetModuleFileNameExA(ptr, zero, buffer, buffer.length);
-		
-		String process = Native.toString(buffer);
-		
-		return process;
-	}
 	
 	/**
 	 * Destroys the window
@@ -101,6 +54,13 @@ public class NativeWindow {
 	}
 	
 	/**
+	 * @return if this window is minimized or not
+	 */
+	public boolean isMinimized() {
+		return getRectangle().x <= -32000;
+	}
+	
+	/**
 	 * Maximizes the window
 	 * @return true if this succeeded
 	 */
@@ -109,13 +69,6 @@ public class NativeWindow {
 	}
 	
 	/**
-	 * @return the process file icon, not the window icon
-	 */
-	public Icon getIcon() {
-		return FileSystemView.getFileSystemView().getSystemIcon(new File(getProcess()));
-	}
-
-	/**
 	 * Brings this window to front using SetForegroundWindow
 	 */
 	public void bringToFront() {
@@ -123,11 +76,93 @@ public class NativeWindow {
 	}
 	
 	/**
+	 * Sets this window either visible or invisible
+	 * @param visible state of the window
+	 * @return true if this succeeded
+	 */
+	public boolean setVisible(boolean visible) {
+		return User32.INSTANCE.ShowWindow(hwnd, visible ? SW_SHOW : SW_HIDE);
+	}
+	
+	/**
 	 * Should always be checked, if false, you might want to ignore it
-	 * @return
+	 * @return true if this window is visible
 	 */
 	public boolean isVisible() {
 		return User32.INSTANCE.IsWindowVisible(hwnd);
+	}
+	
+	public int getHwnd() {
+		return hwnd;
+	}
+	
+	public boolean setRectangle(Rectangle rect) {
+		return User32.INSTANCE.MoveWindow(hwnd, rect.x, rect.y, rect.width, rect.height, true);
+	}
+
+	/**
+	 * @return an java.awt.Rectangle for the RECT
+	 */
+	public Rectangle getRectangle() {
+		NativeRectangle rect = new NativeRectangle();
+		User32.INSTANCE.GetWindowRect(hwnd, rect);
+		
+		return new Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
+	}
+	
+	/**
+	 * Sets the title of this window
+	 * @param title
+	 * @return true if this operation succeeded
+	 */
+	public boolean setTitle(String title) {
+		return User32.INSTANCE.SetWindowTextA(hwnd, title);
+	}
+
+	/**
+	 * @return the title of this window
+	 */
+	public String getTitle() {
+		byte[] buffer = new byte[1024];
+		User32.INSTANCE.GetWindowTextA(hwnd, buffer, buffer.length);
+		String title = Native.toString(buffer);
+		
+		return title;
+	}
+	
+	public String getProcess() {
+		byte[] buffer = new byte[1024];
+
+		Pointer zero = new Pointer(0);
+		IntByReference pid = new IntByReference();
+		User32.INSTANCE.GetWindowThreadProcessId(hwnd, pid);
+
+		Pointer ptr = Kernel32.INSTANCE.OpenProcess(1040, false, pid.getValue());
+		PsAPI.INSTANCE.GetModuleFileNameExA(ptr, zero, buffer, buffer.length);
+		
+		String process = Native.toString(buffer);
+		
+		return process;
+	}
+	
+	/**
+	 * @return the process file icon, not the window icon
+	 */
+	public Icon getIcon() {
+		return FileSystemView.getFileSystemView().getSystemIcon(new File(getProcess()));
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("NativeWindow[Hwnd=").append(getHwnd());
+		builder.append(", Title=").append(getTitle());
+		builder.append(", Process=").append(getProcess());
+		builder.append(", Minimized=").append(isMinimized());
+		builder.append(", Visible=").append(isVisible());
+		builder.append("]");
+		
+		return builder.toString();
 	}
 
 }
