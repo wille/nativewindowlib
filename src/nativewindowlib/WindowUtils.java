@@ -68,17 +68,7 @@ public final class WindowUtils {
 	 * @return the window with the title that has been searched for, or null if not found.
 	 */
 	public static NativeWindow getByTitle(String title) {
-		NativeWindow window = null;
-		List<NativeWindow> windows = WindowUtils.getWindows();
-
-		for (NativeWindow w : windows) {
-			if (w.getTitle().equals(title)) {
-				window = w;
-				break;
-			}
-		}
-		
-		return window;
+		return new NativeWindow(User32.INSTANCE.FindWindowA(null, title));
 	}
 	
 	/**
@@ -105,6 +95,8 @@ public final class WindowUtils {
 		 * @return
 		 */
 		public abstract boolean EnumWindows(WndEnumProc wndenumproc, int lParam);
+		
+		public abstract int FindWindowA(String lpClassName, String lpWindowName);
 
 		/**
 		 * Is window visible (only show windows that is)
