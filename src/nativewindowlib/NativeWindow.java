@@ -121,5 +121,13 @@ public class NativeWindow {
 	public void bringToFront() {
 		WindowUtils.User32.INSTANCE.SetForegroundWindow(hwnd);
 	}
+	
+	/**
+	 * Should always be checked, if false, you might want to ignore it
+	 * @return
+	 */
+	public boolean isVisible() {
+		return User32.INSTANCE.IsWindowVisible(hwnd);
+	}
 
 }

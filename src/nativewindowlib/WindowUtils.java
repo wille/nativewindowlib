@@ -30,12 +30,8 @@ public class WindowUtils {
 		}
 
 		User32.INSTANCE.EnumWindows(new WndEnumProc() {
-			public boolean callback(int hWnd, int lParam) {
-				if (User32.INSTANCE.IsWindowVisible(hWnd)) {
-						
-					inflList.add(new NativeWindow(hWnd));
-
-				}
+			public boolean callback(int hWnd, int lParam) {						
+				inflList.add(new NativeWindow(hWnd));
 				return true;
 			}
 		}, 0);
