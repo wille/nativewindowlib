@@ -54,7 +54,7 @@ public final class WindowUtils {
 		List<NativeWindow> windows = WindowUtils.getWindows();
 
 		for (NativeWindow w : windows) {
-			if (w.isVisible()) {
+			if (w.isVisible() && w.getTitle().length() > 0) {
 				visible.add(w);
 			}
 		}
