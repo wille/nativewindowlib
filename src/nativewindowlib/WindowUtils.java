@@ -46,6 +46,14 @@ public final class WindowUtils {
 	}
 	
 	/**
+	 * Returns the current selected window
+	 * @return
+	 */
+	public static NativeWindow getActiveWindow() {
+		return new NativeWindow(User32.INSTANCE.GetForegroundWindow());
+	}
+	
+	/**
 	 * Finds all windows and checks which are visible
 	 * @return all visible windows.
 	 */
@@ -182,6 +190,12 @@ public final class WindowUtils {
 		 * @return
 		 */
 		public abstract boolean ShowWindow(int hWnd, int nCmdShow);
+		
+		/**
+		 * Returns the current Window HWND
+		 * @return
+		 */
+		public abstract int GetForegroundWindow();
 	}
 
 	public static final int PROCESS_QUERY_INFORMATION = 0x0400;
