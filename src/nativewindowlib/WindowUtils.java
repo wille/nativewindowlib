@@ -5,12 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import com.sun.jna.Native;
-import com.sun.jna.Pointer;
-import com.sun.jna.Structure;
-import com.sun.jna.ptr.IntByReference;
-import com.sun.jna.win32.StdCallLibrary;
-
 public final class WindowUtils {
 
 	/**
@@ -120,7 +114,7 @@ public final class WindowUtils {
 	 * @param r
 	 * @return
 	 */
-	public static native int GetWindowRect(int hWnd, NativeRectangle r);
+	public static native int GetWindowRect(int hWnd, /*nativerectangle*/ int r);
 
 	/**
 	 * Moves window position
@@ -173,7 +167,7 @@ public final class WindowUtils {
 	 */
 	public static native boolean SetForegroundWindow(int hWnd);
 
-	public static native int GetWindowThreadProcessId(int hWnd, IntByReference pid);
+	public static native int GetWindowThreadProcessId(int hWnd, /*intbyreference*/ int pid);
 
 	/**
 	 * Minimizes the window
@@ -216,7 +210,7 @@ public final class WindowUtils {
 	// PSAPI
 	public static native int GetModuleFileNameExA(int /*pointer*/ process, int /*pointer*/ hModule, byte[] lpString, int nMaxCount);
 
-	public static class NativeRectangle extends Structure {
+/*	public static class NativeRectangle extends Structure {
 
 		public int left;
 		public int right;
@@ -234,5 +228,5 @@ public final class WindowUtils {
 
 			return list;
 		}
-	}
+	}*/
 }
