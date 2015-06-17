@@ -61,11 +61,11 @@ JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_MoveWindow
 
 /*
  * Class:     nativewindowlib_WindowUtils
- * Method:    GetWindowTextA
- * Signature: (I[BI)V
+ * Method:    GetWindowText
+ * Signature: (I)Ljava/lang/String;
  */
-JNIEXPORT void JNICALL Java_nativewindowlib_WindowUtils_GetWindowTextA
-  (JNIEnv *, jclass, jint, jbyteArray, jint);
+JNIEXPORT jstring JNICALL Java_nativewindowlib_WindowUtils_GetWindowText
+  (JNIEnv *, jclass, jint);
 
 /*
  * Class:     nativewindowlib_WindowUtils
