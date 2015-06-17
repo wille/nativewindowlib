@@ -2,15 +2,10 @@ package nativewindowlib;
 
 import java.awt.Rectangle;
 import java.io.File;
+import java.lang.annotation.Native;
 
 import javax.swing.Icon;
 import javax.swing.filechooser.FileSystemView;
-
-import com.sun.jna.Native;
-import com.sun.jna.Pointer;
-import com.sun.jna.platform.win32.Kernel32;
-import com.sun.jna.platform.win32.User32;
-import com.sun.jna.ptr.IntByReference;
 
 public class NativeWindow {
 	
@@ -122,7 +117,7 @@ public class NativeWindow {
 	public String getTitle() {
 		byte[] buffer = new byte[1024];
 		WindowUtils.GetWindowTextA(hwnd, buffer, buffer.length);
-		String title = Native.toString(buffer);
+		String title = new String(buffer);
 		
 		return title;
 	}
