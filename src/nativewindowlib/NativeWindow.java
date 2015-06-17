@@ -6,13 +6,10 @@ import java.io.File;
 import javax.swing.Icon;
 import javax.swing.filechooser.FileSystemView;
 
-import nativewindowlib.WindowUtils.Kernel32;
-import nativewindowlib.WindowUtils.NativeRectangle;
-import nativewindowlib.WindowUtils.PsAPI;
-import nativewindowlib.WindowUtils.User32;
-
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
+import com.sun.jna.platform.win32.Kernel32;
+import com.sun.jna.platform.win32.User32;
 import com.sun.jna.ptr.IntByReference;
 
 public class NativeWindow {
@@ -42,7 +39,7 @@ public class NativeWindow {
 	 * @return true if this succeeded
 	 */
 	public boolean close() {
-		return User32.INSTANCE.DestroyWindow(hwnd);
+		return WindowUtils.DestroyWindow(hwnd);
 	}
 	
 	/**
@@ -50,7 +47,7 @@ public class NativeWindow {
 	 * @return true if this succeeded
 	 */
 	public boolean minimize() {
-		return User32.INSTANCE.CloseWindow(hwnd);
+		return WindowUtils.CloseWindow(hwnd);
 	}
 	
 	/**
@@ -65,14 +62,14 @@ public class NativeWindow {
 	 * @return true if this succeeded
 	 */
 	public boolean maximize() {
-		return User32.INSTANCE.ShowWindow(hwnd, SW_MAXIMIZE);
+		return WindowUtils.ShowWindow(hwnd, SW_MAXIMIZE);
 	}
 	
 	/**
 	 * Brings this window to front using SetForegroundWindow
 	 */
 	public void bringToFront() {
-		WindowUtils.User32.INSTANCE.SetForegroundWindow(hwnd);
+		WindowUtils.SetForegroundWindow(hwnd);
 	}
 	
 	/**
@@ -81,7 +78,7 @@ public class NativeWindow {
 	 * @return true if this succeeded
 	 */
 	public boolean setVisible(boolean visible) {
-		return User32.INSTANCE.ShowWindow(hwnd, visible ? SW_SHOW : SW_HIDE);
+		return WindowUtils.ShowWindow(hwnd, visible ? SW_SHOW : SW_HIDE);
 	}
 	
 	/**
@@ -89,7 +86,7 @@ public class NativeWindow {
 	 * @return true if this window is visible
 	 */
 	public boolean isVisible() {
-		return User32.INSTANCE.IsWindowVisible(hwnd);
+		return WindowUtils.IsWindowVisible(hwnd);
 	}
 	
 	public int getHwnd() {
@@ -97,17 +94,17 @@ public class NativeWindow {
 	}
 	
 	public boolean setRectangle(Rectangle rect) {
-		return User32.INSTANCE.MoveWindow(hwnd, rect.x, rect.y, rect.width, rect.height, true);
+		return WindowUtils.MoveWindow(hwnd, rect.x, rect.y, rect.width, rect.height, true);
 	}
 
 	/**
 	 * @return an java.awt.Rectangle for the RECT
 	 */
 	public Rectangle getRectangle() {
-		NativeRectangle rect = new NativeRectangle();
-		User32.INSTANCE.GetWindowRect(hwnd, rect);
-		
-		return new Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
+		//NativeRectangle rect = new NativeRectangle();
+		//WindowUtils.GetWindowRect(hwnd, null);
+		return null;
+		//return new Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
 	}
 	
 	/**
@@ -116,7 +113,7 @@ public class NativeWindow {
 	 * @return true if this operation succeeded
 	 */
 	public boolean setTitle(String title) {
-		return User32.INSTANCE.SetWindowTextA(hwnd, title);
+		return WindowUtils.SetWindowTextA(hwnd, title);
 	}
 
 	/**
@@ -124,23 +121,24 @@ public class NativeWindow {
 	 */
 	public String getTitle() {
 		byte[] buffer = new byte[1024];
-		User32.INSTANCE.GetWindowTextA(hwnd, buffer, buffer.length);
+		WindowUtils.GetWindowTextA(hwnd, buffer, buffer.length);
 		String title = Native.toString(buffer);
 		
 		return title;
 	}
 	
 	public String getProcess() {
-		byte[] buffer = new byte[1024];
+		/*byte[] buffer = new byte[1024];
 
 		Pointer zero = new Pointer(0);
 		IntByReference pid = new IntByReference();
-		User32.INSTANCE.GetWindowThreadProcessId(hwnd, pid);
+		WindowUtils.GetWindowThreadProcessId(hwnd, pid);
 
 		Pointer ptr = Kernel32.INSTANCE.OpenProcess(1040, false, pid.getValue());
 		PsAPI.INSTANCE.GetModuleFileNameExA(ptr, zero, buffer, buffer.length);
 		
-		String process = Native.toString(buffer);
+		String process = Native.toString(buffer);*/
+		String process = null;
 		
 		return process;
 	}
