@@ -1,1 +1,1 @@
-static jstring getstring(JNIEnv * env, char* buffer);
+jstring getstring(JNIEnv * env, char* buffer);

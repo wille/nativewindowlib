@@ -2,7 +2,8 @@
 #include <psapi.h>
 #include <jni.h>
 
-#include "nativewindowlib_WindowUtils.h"
+#include "../nativewindowlib_WindowUtils.h"
+#include "../util.h"
 
 JNIEXPORT void JNICALL Java_nativewindowlib_WindowUtil_ShowWindow(JNIEnv * env, jclass z, jint hwnd, jint mode) {
 	HWND handle = (HWND) hwnd;
@@ -24,18 +25,18 @@ JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_IsWindowVisible(JNIE
 
 JNIEXPORT jstring JNICALL Java_nativewindowlib_WindowUtils_GetWindowText(JNIEnv * env, jclass z, jint hwnd) {
 	HWND handle = (HWND) hwnd;
-	if (handle == 0) {
-		return NULL;
+	if (handle <= 0) {
+		return getstring(env, "");
 	}
 
 	int length = GetWindowTextLengthA(handle);
 	if (length <= 0) {
-		return NULL;
+		return getstring(env, "");
 	}
 
 	LPSTR buffer = (LPSTR) malloc(length * sizeof(TCHAR));
 	GetWindowTextA(handle, buffer, length + 1);
-	jstring title = (*env)->NewStringUTF(env, buffer);
+	jstring title = getstring(env, buffer);
 	free(buffer);
 
 	return title;
@@ -69,7 +70,7 @@ JNIEXPORT jstring JNICALL Java_nativewindowlib_WindowUtils_getProcessFromWindow(
 	GetWindowThreadProcessId(handle, &processId);
 	HANDLE hndl = OpenProcess(1040, FALSE, processId);
 	GetModuleFileNameExA(hndl, 0, buffer, MAX_PATH);
-	jstring process = (*env)->NewStringUTF(env, buffer);
+	jstring process = getstring(env, buffer);
 	free(buffer);
 
 	return process;
