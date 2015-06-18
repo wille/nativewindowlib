@@ -53,11 +53,16 @@ public final class WindowUtils {
 
 	private static final List<Integer> hwnds = new ArrayList<Integer>();
 	
-	private static void callback(int i) {
-		hwnds.add(i);
-
-		if (i == CALLBACK_COMPLETED) {
+	/**
+	 * Callback method, see <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms633497(v=vs.85).aspx">EnumWindows</a>
+	 * When all windows are looped through, gets called with {@link #CALLBACK_COMPLETED} to interrupt the sleeping of {@link #getWindows()}
+	 * @param hwnd the window handle
+	 */
+	private static void callback(int hwnd) {
+		if (hwnd == CALLBACK_COMPLETED) {
 			Thread.currentThread().interrupt();
+		} else {
+			hwnds.add(hwnd);
 		}
 	}
 	
