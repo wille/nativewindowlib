@@ -1,3 +1,3 @@
 #!/bin/bash
 
-javah -jni -d src/nativewindowlib/natives/ -classpath bin nativewindowlib.WindowUtils
+javah -jni -d natives/ -classpath bin nativewindowlib.WindowUtils
