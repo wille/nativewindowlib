@@ -91,10 +91,8 @@ public final class WindowUtils {
 	/**
 	 * Finds all windows and searches for a matching title
 	 * 
-	 * @param title
-	 *            the title to search for
-	 * @return the window with the title that has been searched for, or null if
-	 *         not found.
+	 * @param title the title to search for
+	 * @return the window with the title that has been searched for, or null if not found.
 	 */
 	public static NativeWindow getByTitle(String title) {
 		return new NativeWindow(getFromTitle(title));
@@ -135,7 +133,7 @@ public final class WindowUtils {
 
 	/**
 	 * Gets window title
-	 * 
+	 * Will not function if {@link #isWindowVisible(int)} is false for this handle 
 	 * @param handle
 	 */
 	public static native String getWindowText(int handle);
