@@ -80,3 +80,24 @@ JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_getFromTitle(JNIEnv * en
 	return FindWindowA(NULL, getcstring(env, title));
 }
 
+JNIEXPORT jobject JNICALL Java_nativewindowlib_WindowUtils_getWindowRect(JNIEnv * env, jclass z, jint handle) {
+	HWND hwnd = (HWND) handle;
+	if (hwnd == 0) {
+		return NULL;
+	}
+
+	RECT rect;
+	GetWindowRect(handle, &rect);
+
+	jclass clazz = (*env)->FindClass(env, "java/awt/Rectangle");
+	jmethodID constructor = (*env)->GetMethodID(env, clazz, "<init>", "(IIII)V");
+
+	int x = rect.left;
+	int y = rect.top;
+	int width = rect.right - x;
+	int height = rect.bottom - y;
+
+	jobject rectangle = (*env)->NewObject(env, clazz, constructor, x, y, width, height);
+	return rectangle;
+}
+
