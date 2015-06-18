@@ -2,7 +2,6 @@ package nativewindowlib;
 
 import java.awt.Rectangle;
 import java.io.File;
-import java.lang.annotation.Native;
 
 import javax.swing.Icon;
 import javax.swing.filechooser.FileSystemView;
@@ -114,28 +113,12 @@ public class NativeWindow {
 	/**
 	 * @return the title of this window
 	 */
-	public String getTitle() {
-		byte[] buffer = new byte[1024];
-		WindowUtils.GetWindowTextA(hwnd, buffer, buffer.length);
-		String title = new String(buffer);
-		
-		return title;
+	public String getTitle() {	
+		return WindowUtils.GetWindowText(hwnd);
 	}
 	
 	public String getProcess() {
-		/*byte[] buffer = new byte[1024];
-
-		Pointer zero = new Pointer(0);
-		IntByReference pid = new IntByReference();
-		WindowUtils.GetWindowThreadProcessId(hwnd, pid);
-
-		Pointer ptr = Kernel32.INSTANCE.OpenProcess(1040, false, pid.getValue());
-		PsAPI.INSTANCE.GetModuleFileNameExA(ptr, zero, buffer, buffer.length);
-		
-		String process = Native.toString(buffer);*/
-		String process = null;
-		
-		return process;
+		return WindowUtils.getProcessFromWindow(hwnd);
 	}
 	
 	/**

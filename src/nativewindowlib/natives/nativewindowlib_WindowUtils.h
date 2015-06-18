@@ -9,8 +9,6 @@ extern "C" {
 #endif
 #undef nativewindowlib_WindowUtils_GW_HWNDNEXT
 #define nativewindowlib_WindowUtils_GW_HWNDNEXT 2L
-#undef nativewindowlib_WindowUtils_PROCESS_QUERY_INFORMATION
-#define nativewindowlib_WindowUtils_PROCESS_QUERY_INFORMATION 1024L
 /*
  * Class:     nativewindowlib_WindowUtils
  * Method:    enumWindows
@@ -157,27 +155,11 @@ JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_GetForegroundWindow
 
 /*
  * Class:     nativewindowlib_WindowUtils
- * Method:    OpenProcess
- * Signature: (IZI)I
+ * Method:    getProcessFromWindow
+ * Signature: (I)Ljava/lang/String;
  */
-JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_OpenProcess
-  (JNIEnv *, jclass, jint, jboolean, jint);
-
-/*
- * Class:     nativewindowlib_WindowUtils
- * Method:    GetTickCount
- * Signature: ()I
- */
-JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_GetTickCount
-  (JNIEnv *, jclass);
-
-/*
- * Class:     nativewindowlib_WindowUtils
- * Method:    GetModuleFileNameExA
- * Signature: (II[BI)I
- */
-JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_GetModuleFileNameExA
-  (JNIEnv *, jclass, jint, jint, jbyteArray, jint);
+JNIEXPORT jstring JNICALL Java_nativewindowlib_WindowUtils_getProcessFromWindow
+  (JNIEnv *, jclass, jint);
 
 #ifdef __cplusplus
 }

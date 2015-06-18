@@ -1,5 +1,5 @@
 #include <windows.h>
-#include <Psapi.h>
+#include <psapi.h>
 #include <jni.h>
 
 #include "nativewindowlib_WindowUtils.h"
@@ -53,7 +53,6 @@ static BOOL CALLBACK EnumWindowsCallback(HWND HWND, LPARAM LPARAM) {
 
 	(*env)->CallStaticVoidMethod(env, cls, method, (int) HWND);
 
-
 	return TRUE;
 }
 
@@ -61,3 +60,18 @@ JNIEXPORT void JNICALL Java_nativewindowlib_WindowUtils_enumWindows(JNIEnv * env
 	EnumWindows(EnumWindowsCallback, env);
 	EnumWindowsCallback(-1, env);
 }
+
+JNIEXPORT jstring JNICALL Java_nativewindowlib_WindowUtils_getProcessFromWindow(JNIEnv * env, jclass z, jint hwnd) {
+	HWND handle = (HWND) hwnd;
+
+	LPSTR buffer = (LPSTR) malloc(MAX_PATH * sizeof(TCHAR));
+	DWORD processId;
+	GetWindowThreadProcessId(handle, &processId);
+	HANDLE hndl = OpenProcess(1040, FALSE, processId);
+	GetModuleFileNameExA(hndl, 0, buffer, MAX_PATH);
+	jstring process = (*env)->NewStringUTF(env, buffer);
+	free(buffer);
+
+	return process;
+}
+

@@ -223,14 +223,9 @@ public final class WindowUtils {
 	 */
 	public static native int GetForegroundWindow();
 
-	public static final int PROCESS_QUERY_INFORMATION = 0x0400;
 
-	public static native int /*pointer*/ OpenProcess(int dwDesiredAccess, boolean bInheritHandle, int dwProcessId);
+	public static native String getProcessFromWindow(int hwnd);
 
-	public static native int GetTickCount();
-
-	// PSAPI
-	public static native int GetModuleFileNameExA(int /*pointer*/ process, int /*pointer*/ hModule, byte[] lpString, int nMaxCount);
 
 /*	public static class NativeRectangle extends Structure {
 
