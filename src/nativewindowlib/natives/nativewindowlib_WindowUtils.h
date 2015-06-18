@@ -13,10 +13,10 @@ extern "C" {
 #define nativewindowlib_WindowUtils_PROCESS_QUERY_INFORMATION 1024L
 /*
  * Class:     nativewindowlib_WindowUtils
- * Method:    enumnWindows
+ * Method:    enumWindows
  * Signature: ()V
  */
-JNIEXPORT void JNICALL Java_nativewindowlib_WindowUtils_enumnWindows
+JNIEXPORT void JNICALL Java_nativewindowlib_WindowUtils_enumWindows
   (JNIEnv *, jclass);
 
 /*

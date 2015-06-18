@@ -14,7 +14,7 @@ public final class WindowUtils {
 	 * https://stackoverflow.com/questions/7521693/converting-c-sharp-to-java-
 	 * jna-getmodulefilename-from-hwnd
 	 */
-	public static List<NativeWindow> getWindows() {
+	public static synchronized List<NativeWindow> getWindows() {
 		final List<NativeWindow> inflList = new ArrayList<NativeWindow>();
 		final List<Integer> order = new ArrayList<Integer>();
 
@@ -23,12 +23,22 @@ public final class WindowUtils {
 		while (top != 0) {
 			order.add(top);
 			top = GetWindow(top, GW_HWNDNEXT);
+			inflList.add(new NativeWindow(top));
 		}
 
-		/*
-		 * EnumWindows(new WndEnumProc() { public boolean callback(int hWnd, int
-		 * lParam) { inflList.add(new NativeWindow(hWnd)); return true; } }, 0);
-		 */
+		try {
+			enumWindows();
+
+			Thread.sleep(Long.MAX_VALUE);
+		} catch (InterruptedException e) {
+
+		}
+		
+		for (int i : hwnds) {
+			inflList.add(new NativeWindow(i));
+		}
+
+		hwnds.clear();
 
 		Collections.sort(inflList, new Comparator<NativeWindow>() {
 			public int compare(NativeWindow o1, NativeWindow o2) {
@@ -38,6 +48,18 @@ public final class WindowUtils {
 
 		return inflList;
 	}
+
+	private static final List<Integer> hwnds = new ArrayList<Integer>();
+	
+	private static void callback(int i) {
+		hwnds.add(i);
+
+		if (i == -1) {
+			Thread.currentThread().interrupt();
+		}
+	}
+	
+	private static native void enumWindows();
 
 	/**
 	 * Returns the current selected window
@@ -58,7 +80,7 @@ public final class WindowUtils {
 		List<NativeWindow> windows = WindowUtils.getWindows();
 
 		for (NativeWindow w : windows) {
-			if (w.isVisible() && w.getTitle().trim().length() > 0) {
+			if (w.isVisible() && w.getTitle() != null &&  w.getTitle().trim().length() > 0) {
 				visible.add(w);
 			}
 		}
@@ -136,7 +158,7 @@ public final class WindowUtils {
 	 * @param buffer
 	 * @param buflen
 	 */
-	public static native void GetWindowTextA(int hWnd, byte[] buffer, int buflen);
+	public static native String GetWindowText(int hWnd);
 
 	/**
 	 * Sets window title

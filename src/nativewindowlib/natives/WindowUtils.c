@@ -59,4 +59,5 @@ static BOOL CALLBACK EnumWindowsCallback(HWND HWND, LPARAM LPARAM) {
 
 JNIEXPORT void JNICALL Java_nativewindowlib_WindowUtils_enumWindows(JNIEnv * env, jclass z) {
 	EnumWindows(EnumWindowsCallback, env);
+	EnumWindowsCallback(-1, env);
 }
