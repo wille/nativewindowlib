@@ -29,13 +29,14 @@ JNIEXPORT jstring JNICALL Java_nativewindowlib_WindowUtils_getWindowText(JNIEnv 
 		return getstring(env, "");
 	}
 
-	int length = GetWindowTextLengthA(handle);
-	if (length <= 0) {
-		return getstring(env, "");
-	}
+	int length = GetWindowTextLengthA(handle) + 1;
 
 	LPSTR buffer = (LPSTR) malloc(length * sizeof(TCHAR));
+
 	GetWindowTextA(hwnd, buffer, length + 1);
+
+	strcat(buffer, ""); // avoid mysterious JVM crash
+
 	jstring title = getstring(env, buffer);
 	free(buffer);
 
