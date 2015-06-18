@@ -105,8 +105,6 @@ public final class WindowUtils {
 	
 	private static native void enumWindows();
 
-	public static native boolean callback(int handle, int lParam);
-
 	public static native int FindWindowA(String lpClassName, String lpWindowName);
 
 	/**
@@ -124,7 +122,7 @@ public final class WindowUtils {
 	 * @param r
 	 * @return
 	 */
-	public static native int GetWindowRect(int handle, /*nativerectangle*/ int r);
+	public static native Rectangle GetWindowRect(int handle);
 
 	/**
 	 * Moves window position
@@ -137,7 +135,7 @@ public final class WindowUtils {
 	 * @param bRepaint
 	 * @return
 	 */
-	public static native boolean MoveWindow(int handle, int X, int Y, int nWidth, int nHeight, boolean bRepaint);
+	public static native boolean MoveWindow(int handle, int X, int Y, int nWidth, int nHeight);
 
 	/**
 	 * Gets window title
@@ -155,9 +153,7 @@ public final class WindowUtils {
 	 * @param text
 	 * @return
 	 */
-	public static native boolean SetWindowTextA(int handle, String text);
-
-	public static native int GetWindowThreadProcessId(int handle);
+	public static native boolean SetWindowText(int handle, String text);
 
 	/**
 	 * Gets window on top
@@ -176,8 +172,6 @@ public final class WindowUtils {
 	 * @return
 	 */
 	public static native boolean SetForegroundWindow(int handle);
-
-	public static native int GetWindowThreadProcessId(int handle, /*intbyreference*/ int pid);
 
 	/**
 	 * Minimizes the window
