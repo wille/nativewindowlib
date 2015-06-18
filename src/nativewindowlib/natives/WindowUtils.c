@@ -40,3 +40,23 @@ JNIEXPORT jstring JNICALL Java_nativewindowlib_WindowUtils_GetWindowText(JNIEnv 
 
 	return title;
 }
+
+static BOOL CALLBACK EnumWindowsCallback(HWND HWND, LPARAM LPARAM) {
+	JNIEnv *env = (JNIEnv *) LPARAM;
+
+	jmethodID method;
+	jclass cls;
+
+	cls = (*env)->FindClass(env, "nativewindowlib/WindowUtils");
+
+	method = (*env)->GetStaticMethodID(env, cls, "callback", "(I)V");
+
+	(*env)->CallStaticVoidMethod(env, cls, method, (int) HWND);
+
+
+	return TRUE;
+}
+
+JNIEXPORT void JNICALL Java_nativewindowlib_WindowUtils_enumWindows(JNIEnv * env, jclass z) {
+	EnumWindows(EnumWindowsCallback, env);
+}
