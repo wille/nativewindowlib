@@ -101,10 +101,7 @@ public class NativeWindow {
 	 * @return an java.awt.Rectangle for the RECT
 	 */
 	public Rectangle getRectangle() {
-		//NativeRectangle rect = new NativeRectangle();
-		//WindowUtils.GetWindowRect(hwnd, null);
-		return null;
-		//return new Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
+		return WindowUtils.getWindowRect(handle);
 	}
 	
 	/**

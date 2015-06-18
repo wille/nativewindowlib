@@ -33,11 +33,9 @@ public final class WindowUtils {
 
 		}
 		
-		
 		for (int i : WINDOW_HANDLES) {
 			inflList.add(new NativeWindow(i));
 		}
-		
 		
 		WINDOW_HANDLES.clear();
 
@@ -80,11 +78,9 @@ public final class WindowUtils {
 	public static List<NativeWindow> getVisibleWindows() {
 		List<NativeWindow> visible = new ArrayList<NativeWindow>();
 		List<NativeWindow> windows = WindowUtils.getWindows();
-		
-		for (NativeWindow w : windows) {
-			String title = w.getTitle();
 
-			if (w.isVisible() && title != null &&  title.length() > 0) {
+		for (NativeWindow w : windows) {
+			if (w.isVisible() && w.getTitle().length() > 0) {
 				visible.add(w);
 			}
 		}
