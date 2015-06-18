@@ -17,11 +17,11 @@ public final class WindowUtils {
 		final List<NativeWindow> inflList = new ArrayList<NativeWindow>();
 		final List<Integer> order = new ArrayList<Integer>();
 
-		int top = GetTopWindow(0);
+		int top = getTopWindow(0);
 
 		while (top != 0) {
 			order.add(top);
-			top = GetWindow(top, GW_HWNDNEXT);
+			top = setWindow(top, GW_HWNDNEXT);
 			inflList.add(new NativeWindow(top));
 		}
 
@@ -133,7 +133,6 @@ public final class WindowUtils {
 	 * @param Y
 	 * @param nWidth
 	 * @param nHeight
-	 * @param bRepaint
 	 * @return
 	 */
 	public static native boolean moveWindow(int handle, int X, int Y, int nWidth, int nHeight);
@@ -142,8 +141,6 @@ public final class WindowUtils {
 	 * Gets window title
 	 * 
 	 * @param handle
-	 * @param buffer
-	 * @param buflen
 	 */
 	public static native String getWindowText(int handle);
 

@@ -91,7 +91,7 @@ public class NativeWindow {
 	}
 	
 	public boolean setRectangle(Rectangle rect) {
-		return WindowUtils.MoveWindow(handle, rect.x, rect.y, rect.width, rect.height, true);
+		return WindowUtils.moveWindow(handle, rect.x, rect.y, rect.width, rect.height);
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class NativeWindow {
 	 * @return true if this operation succeeded
 	 */
 	public boolean setTitle(String title) {
-		return WindowUtils.SetWindowTextA(handle, title);
+		return WindowUtils.setWindowText(handle, title);
 	}
 
 	/**
