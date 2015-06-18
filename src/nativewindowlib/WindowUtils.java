@@ -10,14 +10,8 @@ public final class WindowUtils {
 	private static final List<Integer> WINDOW_HANDLES = new ArrayList<Integer>();
 
 	public static final int CALLBACK_COMPLETED = -1;
+	public static final int GW_HWNDNEXT = 2;
 
-	/**
-	 * https://stackoverflow.com/questions/3188484/windows-how-to-get-a-list-of-
-	 * all-visible-windows
-	 * 
-	 * https://stackoverflow.com/questions/7521693/converting-c-sharp-to-java-
-	 * jna-getmodulefilename-from-hwnd
-	 */
 	public static synchronized List<NativeWindow> getWindows() {
 		final List<NativeWindow> inflList = new ArrayList<NativeWindow>();
 		final List<Integer> order = new ArrayList<Integer>();
@@ -26,7 +20,7 @@ public final class WindowUtils {
 
 		while (top != 0) {
 			order.add(top);
-			top = GetWindow(top, GW_handleNEXT);
+			top = GetWindow(top, GW_HWNDNEXT);
 			inflList.add(new NativeWindow(top));
 		}
 
@@ -38,10 +32,12 @@ public final class WindowUtils {
 
 		}
 		
+		
 		for (int i : WINDOW_HANDLES) {
 			inflList.add(new NativeWindow(i));
 		}
-
+		
+		
 		WINDOW_HANDLES.clear();
 
 		Collections.sort(inflList, new Comparator<NativeWindow>() {
@@ -66,8 +62,6 @@ public final class WindowUtils {
 		}
 	}
 	
-	private static native void enumWindows();
-
 	/**
 	 * Returns the current selected window
 	 * 
@@ -85,13 +79,15 @@ public final class WindowUtils {
 	public static List<NativeWindow> getVisibleWindows() {
 		List<NativeWindow> visible = new ArrayList<NativeWindow>();
 		List<NativeWindow> windows = WindowUtils.getWindows();
-
+		
 		for (NativeWindow w : windows) {
-			if (w.isVisible() && w.getTitle() != null &&  w.getTitle().trim().length() > 0) {
+			String title = w.getTitle();
+
+			if (w.isVisible() && title != null &&  title.length() > 0) {
 				visible.add(w);
 			}
 		}
-
+		
 		return visible;
 	}
 
@@ -106,25 +102,10 @@ public final class WindowUtils {
 	public static NativeWindow getByTitle(String title) {
 		return new NativeWindow(FindWindowA(null, title));
 	}
-
-	/**
-	 * Prevent instantiation
-	 */
-	private WindowUtils() {
-	}
+	
+	private static native void enumWindows();
 
 	public static native boolean callback(int handle, int lParam);
-
-	public static final int GW_handleNEXT = 2;
-
-	/**
-	 * Enumerate all native windows
-	 * 
-	 * @param wndenumproc
-	 * @param lParam
-	 * @return
-	 */
-	public static native boolean EnumWindows(int wndenumproc, int lParam); // TODO
 
 	public static native int FindWindowA(String lpClassName, String lpWindowName);
 
@@ -232,24 +213,4 @@ public final class WindowUtils {
 
 	public static native String getProcessFromWindow(int handle);
 
-
-/*	public static class NativeRectangle extends Structure {
-
-		public int left;
-		public int right;
-		public int top;
-		public int bottom;
-
-		@Override
-		protected List<String> getFieldOrder() {
-			List<String> list = new ArrayList<String>();
-			list.add("left");
-			list.add("top");
-
-			list.add("right");
-			list.add("bottom");
-
-			return list;
-		}
-	}*/
 }
