@@ -21,7 +21,7 @@ public final class WindowUtils {
 
 		while (top != 0) {
 			order.add(top);
-			top = setWindow(top, GW_HWNDNEXT);
+			top = getWindow(top, GW_HWNDNEXT);
 			inflList.add(new NativeWindow(top));
 		}
 
@@ -161,7 +161,7 @@ public final class WindowUtils {
 	 */
 	public static native int getTopWindow(int handle);
 
-	public static native int setWindow(int handle, int flag);
+	public static native int getWindow(int handle, int flag);
 
 	/**
 	 * Set focus on window
