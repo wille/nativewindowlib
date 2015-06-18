@@ -101,3 +101,6 @@ JNIEXPORT jobject JNICALL Java_nativewindowlib_WindowUtils_getWindowRect(JNIEnv 
 	return rectangle;
 }
 
+JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_moveWindow(JNIEnv * env, jclass z, jint handle, jint x, jint y, jint width, jint height) {
+	return MoveWindow(handle, x, y, width, height, TRUE);
+}
