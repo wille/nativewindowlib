@@ -33,7 +33,7 @@ public class NativeWindow {
 	 * @return true if this succeeded
 	 */
 	public boolean close() {
-		return WindowUtils.DestroyWindow(handle);
+		return WindowUtils.destroyWindow(handle);
 	}
 	
 	/**
@@ -41,7 +41,7 @@ public class NativeWindow {
 	 * @return true if this succeeded
 	 */
 	public boolean minimize() {
-		return WindowUtils.CloseWindow(handle);
+		return WindowUtils.closeWindow(handle);
 	}
 	
 	/**
@@ -56,14 +56,14 @@ public class NativeWindow {
 	 * @return true if this succeeded
 	 */
 	public boolean maximize() {
-		return WindowUtils.ShowWindow(handle, SW_MAXIMIZE);
+		return WindowUtils.showWindow(handle, SW_MAXIMIZE);
 	}
 	
 	/**
 	 * Brings this window to front using SetForegroundWindow
 	 */
 	public void bringToFront() {
-		WindowUtils.SetForegroundWindow(handle);
+		WindowUtils.setForegroundWindow(handle);
 	}
 	
 	/**
@@ -72,7 +72,7 @@ public class NativeWindow {
 	 * @return true if this succeeded
 	 */
 	public boolean setVisible(boolean visible) {
-		return WindowUtils.ShowWindow(handle, visible ? SW_SHOW : SW_HIDE);
+		return WindowUtils.showWindow(handle, visible ? SW_SHOW : SW_HIDE);
 	}
 	
 	/**
@@ -80,7 +80,7 @@ public class NativeWindow {
 	 * @return true if this window is visible
 	 */
 	public boolean isVisible() {
-		return WindowUtils.IsWindowVisible(handle);
+		return WindowUtils.isWindowVisible(handle);
 	}
 	
 	/**
@@ -117,7 +117,7 @@ public class NativeWindow {
 	 * @return the title of this window
 	 */
 	public String getTitle() {	
-		return WindowUtils.GetWindowText(handle);
+		return WindowUtils.getWindowText(handle);
 	}
 	
 	public String getProcess() {

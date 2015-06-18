@@ -1,5 +1,6 @@
 package nativewindowlib;
 
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -68,7 +69,7 @@ public final class WindowUtils {
 	 * @return
 	 */
 	public static NativeWindow getActiveWindow() {
-		return new NativeWindow(GetForegroundWindow());
+		return new NativeWindow(getForegroundWindow());
 	}
 
 	/**
@@ -100,12 +101,12 @@ public final class WindowUtils {
 	 *         not found.
 	 */
 	public static NativeWindow getByTitle(String title) {
-		return new NativeWindow(FindWindowA(null, title));
+		return new NativeWindow(getFromTitle(title));
 	}
 	
 	private static native void enumWindows();
 
-	public static native int FindWindowA(String lpClassName, String lpWindowName);
+	public static native int getFromTitle(String title);
 
 	/**
 	 * Is window visible (only show windows that is)
@@ -113,7 +114,7 @@ public final class WindowUtils {
 	 * @param handle
 	 * @return
 	 */
-	public static native boolean IsWindowVisible(int handle);
+	public static native boolean isWindowVisible(int handle);
 
 	/**
 	 * Gets window position
@@ -122,7 +123,7 @@ public final class WindowUtils {
 	 * @param r
 	 * @return
 	 */
-	public static native Rectangle GetWindowRect(int handle);
+	public static native Rectangle getWindowRect(int handle);
 
 	/**
 	 * Moves window position
@@ -135,7 +136,7 @@ public final class WindowUtils {
 	 * @param bRepaint
 	 * @return
 	 */
-	public static native boolean MoveWindow(int handle, int X, int Y, int nWidth, int nHeight);
+	public static native boolean moveWindow(int handle, int X, int Y, int nWidth, int nHeight);
 
 	/**
 	 * Gets window title
@@ -144,7 +145,7 @@ public final class WindowUtils {
 	 * @param buffer
 	 * @param buflen
 	 */
-	public static native String GetWindowText(int handle);
+	public static native String getWindowText(int handle);
 
 	/**
 	 * Sets window title
@@ -153,7 +154,7 @@ public final class WindowUtils {
 	 * @param text
 	 * @return
 	 */
-	public static native boolean SetWindowText(int handle, String text);
+	public static native boolean setWindowText(int handle, String text);
 
 	/**
 	 * Gets window on top
@@ -161,9 +162,9 @@ public final class WindowUtils {
 	 * @param handle
 	 * @return
 	 */
-	public static native int GetTopWindow(int handle);
+	public static native int getTopWindow(int handle);
 
-	public static native int GetWindow(int handle, int flag);
+	public static native int setWindow(int handle, int flag);
 
 	/**
 	 * Set focus on window
@@ -171,7 +172,7 @@ public final class WindowUtils {
 	 * @param handle
 	 * @return
 	 */
-	public static native boolean SetForegroundWindow(int handle);
+	public static native boolean setForegroundWindow(int handle);
 
 	/**
 	 * Minimizes the window
@@ -179,7 +180,7 @@ public final class WindowUtils {
 	 * @param handle
 	 * @return
 	 */
-	public static native boolean CloseWindow(int handle);
+	public static native boolean closeWindow(int handle);
 
 	/**
 	 * Closes the window
@@ -187,7 +188,7 @@ public final class WindowUtils {
 	 * @param handle
 	 * @return
 	 */
-	public static native boolean DestroyWindow(int handle);
+	public static native boolean destroyWindow(int handle);
 
 	/**
 	 * Changes state of the window
@@ -196,14 +197,14 @@ public final class WindowUtils {
 	 * @param nCmdShow
 	 * @return
 	 */
-	public static native boolean ShowWindow(int handle, int nCmdShow);
+	public static native boolean showWindow(int handle, int nCmdShow);
 
 	/**
 	 * Returns the current Window handle
 	 * 
 	 * @return
 	 */
-	public static native int GetForegroundWindow();
+	public static native int getForegroundWindow();
 
 	public static native String getProcessFromWindow(int handle);
 

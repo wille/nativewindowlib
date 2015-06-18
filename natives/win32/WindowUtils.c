@@ -5,25 +5,25 @@
 #include "../nativewindowlib_WindowUtils.h"
 #include "../util.h"
 
-JNIEXPORT void JNICALL Java_nativewindowlib_WindowUtil_ShowWindow(JNIEnv * env, jclass z, jint handle, jint mode) {
+JNIEXPORT void JNICALL Java_nativewindowlib_WindowUtil_showWindow(JNIEnv * env, jclass z, jint handle, jint mode) {
 	HWND hwnd = (HWND) handle;
 
 	ShowWindow(hwnd, mode);
 }
 
-JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_GetTopWindow(JNIEnv * env, jclass z, jint handle) {
+JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_getTopWindow(JNIEnv * env, jclass z, jint handle) {
 	return GetTopWindow(handle);
 }
 
-JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_GetWindow(JNIEnv * env, jclass z, jint handle, jint mode) {
+JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_getWindow(JNIEnv * env, jclass z, jint handle, jint mode) {
 	return GetWindow(handle, mode);
 }
 
-JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_IsWindowVisible(JNIEnv * env, jclass z, jint handle) {
+JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_isWindowVisible(JNIEnv * env, jclass z, jint handle) {
 	return IsWindowVisible(handle);
 }
 
-JNIEXPORT jstring JNICALL Java_nativewindowlib_WindowUtils_GetWindowText(JNIEnv * env, jclass z, jint handle) {
+JNIEXPORT jstring JNICALL Java_nativewindowlib_WindowUtils_getWindowText(JNIEnv * env, jclass z, jint handle) {
 	HWND hwnd = (HWND) handle;
 	if (hwnd <= 0) {
 		return getstring(env, "");
@@ -74,5 +74,9 @@ JNIEXPORT jstring JNICALL Java_nativewindowlib_WindowUtils_getProcessFromWindow(
 	free(buffer);
 
 	return process;
+}
+
+JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_getFromTitle(JNIEnv * env, jclass z, jstring title) {
+	return FindWindowA(NULL, getcstring(env, title));
 }
 

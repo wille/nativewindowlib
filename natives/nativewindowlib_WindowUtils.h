@@ -9,8 +9,8 @@ extern "C" {
 #endif
 #undef nativewindowlib_WindowUtils_CALLBACK_COMPLETED
 #define nativewindowlib_WindowUtils_CALLBACK_COMPLETED -1L
-#undef nativewindowlib_WindowUtils_GW_handleNEXT
-#define nativewindowlib_WindowUtils_GW_handleNEXT 2L
+#undef nativewindowlib_WindowUtils_GW_HWNDNEXT
+#define nativewindowlib_WindowUtils_GW_HWNDNEXT 2L
 /*
  * Class:     nativewindowlib_WindowUtils
  * Method:    enumWindows
@@ -21,138 +21,106 @@ JNIEXPORT void JNICALL Java_nativewindowlib_WindowUtils_enumWindows
 
 /*
  * Class:     nativewindowlib_WindowUtils
- * Method:    callback
- * Signature: (II)Z
+ * Method:    getFromTitle
+ * Signature: (Ljava/lang/String;)I
  */
-JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_callback
-  (JNIEnv *, jclass, jint, jint);
+JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_getFromTitle
+  (JNIEnv *, jclass, jstring);
 
 /*
  * Class:     nativewindowlib_WindowUtils
- * Method:    EnumWindows
- * Signature: (II)Z
- */
-JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_EnumWindows
-  (JNIEnv *, jclass, jint, jint);
-
-/*
- * Class:     nativewindowlib_WindowUtils
- * Method:    FindWindowA
- * Signature: (Ljava/lang/String;Ljava/lang/String;)I
- */
-JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_FindWindowA
-  (JNIEnv *, jclass, jstring, jstring);
-
-/*
- * Class:     nativewindowlib_WindowUtils
- * Method:    IsWindowVisible
+ * Method:    isWindowVisible
  * Signature: (I)Z
  */
-JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_IsWindowVisible
+JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_isWindowVisible
   (JNIEnv *, jclass, jint);
 
 /*
  * Class:     nativewindowlib_WindowUtils
- * Method:    GetWindowRect
- * Signature: (II)I
+ * Method:    getWindowRect
+ * Signature: (I)Ljava/awt/Rectangle;
  */
-JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_GetWindowRect
-  (JNIEnv *, jclass, jint, jint);
+JNIEXPORT jobject JNICALL Java_nativewindowlib_WindowUtils_getWindowRect
+  (JNIEnv *, jclass, jint);
 
 /*
  * Class:     nativewindowlib_WindowUtils
- * Method:    MoveWindow
- * Signature: (IIIIIZ)Z
+ * Method:    moveWindow
+ * Signature: (IIIII)Z
  */
-JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_MoveWindow
-  (JNIEnv *, jclass, jint, jint, jint, jint, jint, jboolean);
+JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_moveWindow
+  (JNIEnv *, jclass, jint, jint, jint, jint, jint);
 
 /*
  * Class:     nativewindowlib_WindowUtils
- * Method:    GetWindowText
+ * Method:    getWindowText
  * Signature: (I)Ljava/lang/String;
  */
-JNIEXPORT jstring JNICALL Java_nativewindowlib_WindowUtils_GetWindowText
+JNIEXPORT jstring JNICALL Java_nativewindowlib_WindowUtils_getWindowText
   (JNIEnv *, jclass, jint);
 
 /*
  * Class:     nativewindowlib_WindowUtils
- * Method:    SetWindowTextA
+ * Method:    setWindowText
  * Signature: (ILjava/lang/String;)Z
  */
-JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_SetWindowTextA
+JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_setWindowText
   (JNIEnv *, jclass, jint, jstring);
 
 /*
  * Class:     nativewindowlib_WindowUtils
- * Method:    GetWindowThreadProcessId
+ * Method:    getTopWindow
  * Signature: (I)I
  */
-JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_GetWindowThreadProcessId__I
+JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_getTopWindow
   (JNIEnv *, jclass, jint);
 
 /*
  * Class:     nativewindowlib_WindowUtils
- * Method:    GetTopWindow
- * Signature: (I)I
- */
-JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_GetTopWindow
-  (JNIEnv *, jclass, jint);
-
-/*
- * Class:     nativewindowlib_WindowUtils
- * Method:    GetWindow
+ * Method:    setWindow
  * Signature: (II)I
  */
-JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_GetWindow
+JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_setWindow
   (JNIEnv *, jclass, jint, jint);
 
 /*
  * Class:     nativewindowlib_WindowUtils
- * Method:    SetForegroundWindow
+ * Method:    setForegroundWindow
  * Signature: (I)Z
  */
-JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_SetForegroundWindow
+JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_setForegroundWindow
   (JNIEnv *, jclass, jint);
 
 /*
  * Class:     nativewindowlib_WindowUtils
- * Method:    GetWindowThreadProcessId
- * Signature: (II)I
- */
-JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_GetWindowThreadProcessId__II
-  (JNIEnv *, jclass, jint, jint);
-
-/*
- * Class:     nativewindowlib_WindowUtils
- * Method:    CloseWindow
+ * Method:    closeWindow
  * Signature: (I)Z
  */
-JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_CloseWindow
+JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_closeWindow
   (JNIEnv *, jclass, jint);
 
 /*
  * Class:     nativewindowlib_WindowUtils
- * Method:    DestroyWindow
+ * Method:    destroyWindow
  * Signature: (I)Z
  */
-JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_DestroyWindow
+JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_destroyWindow
   (JNIEnv *, jclass, jint);
 
 /*
  * Class:     nativewindowlib_WindowUtils
- * Method:    ShowWindow
+ * Method:    showWindow
  * Signature: (II)Z
  */
-JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_ShowWindow
+JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_showWindow
   (JNIEnv *, jclass, jint, jint);
 
 /*
  * Class:     nativewindowlib_WindowUtils
- * Method:    GetForegroundWindow
+ * Method:    getForegroundWindow
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_GetForegroundWindow
+JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_getForegroundWindow
   (JNIEnv *, jclass);
 
 /*
