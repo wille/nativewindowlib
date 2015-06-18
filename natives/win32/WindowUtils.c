@@ -53,14 +53,7 @@ JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_setWindowText(JNIEnv
 static BOOL CALLBACK EnumWindowsCallback(HWND handle, LPARAM LPARAM) {
 	JNIEnv *env = (JNIEnv *) LPARAM;
 
-	jmethodID method;
-	jclass cls;
-
-	cls = (*env)->FindClass(env, "nativewindowlib/WindowUtils");
-
-	method = (*env)->GetStaticMethodID(env, cls, "callback", "(I)V");
-
-	(*env)->CallStaticVoidMethod(env, cls, method, (int) handle);
+	callback((JNIEnv *) LPARAM, (int) handle);
 
 	return TRUE;
 }
