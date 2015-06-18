@@ -7,6 +7,8 @@ import java.util.List;
 
 public final class WindowUtils {
 	
+	private static final List<Integer> WINDOW_HANDLES = new ArrayList<Integer>();
+
 	public static final int CALLBACK_COMPLETED = -1;
 
 	/**
@@ -36,11 +38,11 @@ public final class WindowUtils {
 
 		}
 		
-		for (int i : hwnds) {
+		for (int i : WINDOW_HANDLES) {
 			inflList.add(new NativeWindow(i));
 		}
 
-		hwnds.clear();
+		WINDOW_HANDLES.clear();
 
 		Collections.sort(inflList, new Comparator<NativeWindow>() {
 			public int compare(NativeWindow o1, NativeWindow o2) {
@@ -50,8 +52,6 @@ public final class WindowUtils {
 
 		return inflList;
 	}
-
-	private static final List<Integer> hwnds = new ArrayList<Integer>();
 	
 	/**
 	 * Callback method, see <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms633497(v=vs.85).aspx">EnumWindows</a>
@@ -62,7 +62,7 @@ public final class WindowUtils {
 		if (hwnd == CALLBACK_COMPLETED) {
 			Thread.currentThread().interrupt();
 		} else {
-			hwnds.add(hwnd);
+			WINDOW_HANDLES.add(hwnd);
 		}
 	}
 	
