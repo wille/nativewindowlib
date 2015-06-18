@@ -191,10 +191,10 @@ public final class WindowUtils {
 	 * Changes state of the window
 	 * 
 	 * @param handle
-	 * @param nCmdShow
+	 * @param flag see {@link NativeWindow#Win32} for Windows flags
 	 * @return
 	 */
-	public static native boolean showWindow(int handle, int nCmdShow);
+	public static native boolean showWindow(int handle, int flag);
 
 	/**
 	 * Returns the current Window handle

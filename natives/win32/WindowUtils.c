@@ -121,3 +121,6 @@ JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_destroyWindow(JNIEnv
 	return DestroyWindow(handle);
 }
 
+JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_showWindow(JNIEnv * env, jclass z, jint handle, jint nCmdShow) {
+	return ShowWindow(handle, nCmdShow);
+}

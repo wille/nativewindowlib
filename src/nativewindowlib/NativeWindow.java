@@ -8,19 +8,22 @@ import javax.swing.filechooser.FileSystemView;
 
 public class NativeWindow {
 	
-	public static final int SW_FORCEMINIMIZE = 11;
-	public static final int SW_HIDE = 0;
-	public static final int SW_MAXIMIZE = 3;
-	public static final int SW_MINIMIZE = 6;
-	public static final int SW_RESTORE = 9;
-	public static final int SW_SHOW = 5;
-	public static final int SW_SHOWDEFAULT = 10;
-	public static final int SW_SHOWMAXIMIZED = 3;
-	public static final int SW_SHOWMINIMIZED = 2;
-	public static final int SW_SHOWMINNOACTIVE = 7;
-	public static final int SW_SHOWNA = 8;
-	public static final int SW_SHOWNOACTIVATE = 4;
-	public static final int SW_SHOWNORMAL = 1;
+	public static class Win32 {
+		
+		public static final int SW_FORCEMINIMIZE = 11;
+		public static final int SW_HIDE = 0;
+		public static final int SW_MAXIMIZE = 3;
+		public static final int SW_MINIMIZE = 6;
+		public static final int SW_RESTORE = 9;
+		public static final int SW_SHOW = 5;
+		public static final int SW_SHOWDEFAULT = 10;
+		public static final int SW_SHOWMAXIMIZED = 3;
+		public static final int SW_SHOWMINIMIZED = 2;
+		public static final int SW_SHOWMINNOACTIVE = 7;
+		public static final int SW_SHOWNA = 8;
+		public static final int SW_SHOWNOACTIVATE = 4;
+		public static final int SW_SHOWNORMAL = 1;
+	}
 
 	private int handle;
 
@@ -56,7 +59,7 @@ public class NativeWindow {
 	 * @return true if this succeeded
 	 */
 	public boolean maximize() {
-		return WindowUtils.showWindow(handle, SW_MAXIMIZE);
+		return WindowUtils.showWindow(handle, Win32.SW_MAXIMIZE);
 	}
 	
 	/**
@@ -72,7 +75,7 @@ public class NativeWindow {
 	 * @return true if this succeeded
 	 */
 	public boolean setVisible(boolean visible) {
-		return WindowUtils.showWindow(handle, visible ? SW_SHOW : SW_HIDE);
+		return WindowUtils.showWindow(handle, visible ? Win32.SW_SHOW : Win32.SW_HIDE);
 	}
 	
 	/**
