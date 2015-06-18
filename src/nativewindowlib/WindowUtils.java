@@ -6,6 +6,8 @@ import java.util.Comparator;
 import java.util.List;
 
 public final class WindowUtils {
+	
+	public static final int CALLBACK_COMPLETED = -1;
 
 	/**
 	 * https://stackoverflow.com/questions/3188484/windows-how-to-get-a-list-of-
@@ -54,7 +56,7 @@ public final class WindowUtils {
 	private static void callback(int i) {
 		hwnds.add(i);
 
-		if (i == -1) {
+		if (i == CALLBACK_COMPLETED) {
 			Thread.currentThread().interrupt();
 		}
 	}

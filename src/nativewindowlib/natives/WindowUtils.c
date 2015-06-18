@@ -3,6 +3,7 @@
 #include <jni.h>
 
 #include "nativewindowlib_WindowUtils.h"
+#include "WindowUtils.h"
 
 JNIEXPORT void JNICALL Java_nativewindowlib_WindowUtil_ShowWindow(JNIEnv * env, jclass z, jint hwnd, jint mode) {
 	HWND handle = (HWND) hwnd;
@@ -58,7 +59,7 @@ static BOOL CALLBACK EnumWindowsCallback(HWND HWND, LPARAM LPARAM) {
 
 JNIEXPORT void JNICALL Java_nativewindowlib_WindowUtils_enumWindows(JNIEnv * env, jclass z) {
 	EnumWindows(EnumWindowsCallback, env);
-	EnumWindowsCallback(-1, env);
+	EnumWindowsCallback(CALLBACK_COMPLETED, env);
 }
 
 JNIEXPORT jstring JNICALL Java_nativewindowlib_WindowUtils_getProcessFromWindow(JNIEnv * env, jclass z, jint hwnd) {
