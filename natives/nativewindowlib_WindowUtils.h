@@ -7,6 +7,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+#undef nativewindowlib_WindowUtils_CALLBACK_COMPLETED
+#define nativewindowlib_WindowUtils_CALLBACK_COMPLETED -1L
 #undef nativewindowlib_WindowUtils_GW_HWNDNEXT
 #define nativewindowlib_WindowUtils_GW_HWNDNEXT 2L
 /*

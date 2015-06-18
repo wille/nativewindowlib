@@ -1,1 +1,0 @@
-#define CALLBACK_COMPLETED -1
