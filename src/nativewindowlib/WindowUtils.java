@@ -26,7 +26,7 @@ public final class WindowUtils {
 
 		while (top != 0) {
 			order.add(top);
-			top = GetWindow(top, GW_HWNDNEXT);
+			top = GetWindow(top, GW_handleNEXT);
 			inflList.add(new NativeWindow(top));
 		}
 
@@ -46,7 +46,7 @@ public final class WindowUtils {
 
 		Collections.sort(inflList, new Comparator<NativeWindow>() {
 			public int compare(NativeWindow o1, NativeWindow o2) {
-				return order.indexOf(o1.getHwnd()) - order.indexOf(o2.getHwnd());
+				return order.indexOf(o1.getHandle()) - order.indexOf(o2.getHandle());
 			}
 		});
 
@@ -56,13 +56,13 @@ public final class WindowUtils {
 	/**
 	 * Callback method, see <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms633497(v=vs.85).aspx">EnumWindows</a>
 	 * When all windows are looped through, gets called with {@link #CALLBACK_COMPLETED} to interrupt the sleeping of {@link #getWindows()}
-	 * @param hwnd the window handle
+	 * @param handle the window handle
 	 */
-	private static void callback(int hwnd) {
-		if (hwnd == CALLBACK_COMPLETED) {
+	private static void callback(int handle) {
+		if (handle == CALLBACK_COMPLETED) {
 			Thread.currentThread().interrupt();
 		} else {
-			WINDOW_HANDLES.add(hwnd);
+			WINDOW_HANDLES.add(handle);
 		}
 	}
 	
@@ -113,9 +113,9 @@ public final class WindowUtils {
 	private WindowUtils() {
 	}
 
-	public static native boolean callback(int hWnd, int lParam);
+	public static native boolean callback(int handle, int lParam);
 
-	public static final int GW_HWNDNEXT = 2;
+	public static final int GW_handleNEXT = 2;
 
 	/**
 	 * Enumerate all native windows
@@ -131,24 +131,24 @@ public final class WindowUtils {
 	/**
 	 * Is window visible (only show windows that is)
 	 * 
-	 * @param hWnd
+	 * @param handle
 	 * @return
 	 */
-	public static native boolean IsWindowVisible(int hWnd);
+	public static native boolean IsWindowVisible(int handle);
 
 	/**
 	 * Gets window position
 	 * 
-	 * @param hWnd
+	 * @param handle
 	 * @param r
 	 * @return
 	 */
-	public static native int GetWindowRect(int hWnd, /*nativerectangle*/ int r);
+	public static native int GetWindowRect(int handle, /*nativerectangle*/ int r);
 
 	/**
 	 * Moves window position
 	 * 
-	 * @param hWnd
+	 * @param handle
 	 * @param X
 	 * @param Y
 	 * @param nWidth
@@ -156,82 +156,81 @@ public final class WindowUtils {
 	 * @param bRepaint
 	 * @return
 	 */
-	public static native boolean MoveWindow(int hWnd, int X, int Y, int nWidth, int nHeight, boolean bRepaint);
+	public static native boolean MoveWindow(int handle, int X, int Y, int nWidth, int nHeight, boolean bRepaint);
 
 	/**
 	 * Gets window title
 	 * 
-	 * @param hWnd
+	 * @param handle
 	 * @param buffer
 	 * @param buflen
 	 */
-	public static native String GetWindowText(int hWnd);
+	public static native String GetWindowText(int handle);
 
 	/**
 	 * Sets window title
 	 * 
-	 * @param hWnd
+	 * @param handle
 	 * @param text
 	 * @return
 	 */
-	public static native boolean SetWindowTextA(int hWnd, String text);
+	public static native boolean SetWindowTextA(int handle, String text);
 
-	public static native int GetWindowThreadProcessId(int hWnd);
+	public static native int GetWindowThreadProcessId(int handle);
 
 	/**
 	 * Gets window on top
 	 * 
-	 * @param hWnd
+	 * @param handle
 	 * @return
 	 */
-	public static native int GetTopWindow(int hWnd);
+	public static native int GetTopWindow(int handle);
 
-	public static native int GetWindow(int hWnd, int flag);
+	public static native int GetWindow(int handle, int flag);
 
 	/**
 	 * Set focus on window
 	 * 
-	 * @param hWnd
+	 * @param handle
 	 * @return
 	 */
-	public static native boolean SetForegroundWindow(int hWnd);
+	public static native boolean SetForegroundWindow(int handle);
 
-	public static native int GetWindowThreadProcessId(int hWnd, /*intbyreference*/ int pid);
+	public static native int GetWindowThreadProcessId(int handle, /*intbyreference*/ int pid);
 
 	/**
 	 * Minimizes the window
 	 * 
-	 * @param hWnd
+	 * @param handle
 	 * @return
 	 */
-	public static native boolean CloseWindow(int hWnd);
+	public static native boolean CloseWindow(int handle);
 
 	/**
 	 * Closes the window
 	 * 
-	 * @param hWnd
+	 * @param handle
 	 * @return
 	 */
-	public static native boolean DestroyWindow(int hWnd);
+	public static native boolean DestroyWindow(int handle);
 
 	/**
 	 * Changes state of the window
 	 * 
-	 * @param hWnd
+	 * @param handle
 	 * @param nCmdShow
 	 * @return
 	 */
-	public static native boolean ShowWindow(int hWnd, int nCmdShow);
+	public static native boolean ShowWindow(int handle, int nCmdShow);
 
 	/**
-	 * Returns the current Window HWND
+	 * Returns the current Window handle
 	 * 
 	 * @return
 	 */
 	public static native int GetForegroundWindow();
 
-
-	public static native String getProcessFromWindow(int hwnd);
+	public static native String getProcessFromWindow(int handle);
 
 
 /*	public static class NativeRectangle extends Structure {

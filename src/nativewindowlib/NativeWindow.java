@@ -22,10 +22,10 @@ public class NativeWindow {
 	public static final int SW_SHOWNOACTIVATE = 4;
 	public static final int SW_SHOWNORMAL = 1;
 
-	private int hwnd;
+	private int handle;
 
 	public NativeWindow(int hwnd) {
-		this.hwnd = hwnd;
+		this.handle = hwnd;
 	}
 	
 	/**
@@ -33,7 +33,7 @@ public class NativeWindow {
 	 * @return true if this succeeded
 	 */
 	public boolean close() {
-		return WindowUtils.DestroyWindow(hwnd);
+		return WindowUtils.DestroyWindow(handle);
 	}
 	
 	/**
@@ -41,7 +41,7 @@ public class NativeWindow {
 	 * @return true if this succeeded
 	 */
 	public boolean minimize() {
-		return WindowUtils.CloseWindow(hwnd);
+		return WindowUtils.CloseWindow(handle);
 	}
 	
 	/**
@@ -56,14 +56,14 @@ public class NativeWindow {
 	 * @return true if this succeeded
 	 */
 	public boolean maximize() {
-		return WindowUtils.ShowWindow(hwnd, SW_MAXIMIZE);
+		return WindowUtils.ShowWindow(handle, SW_MAXIMIZE);
 	}
 	
 	/**
 	 * Brings this window to front using SetForegroundWindow
 	 */
 	public void bringToFront() {
-		WindowUtils.SetForegroundWindow(hwnd);
+		WindowUtils.SetForegroundWindow(handle);
 	}
 	
 	/**
@@ -72,7 +72,7 @@ public class NativeWindow {
 	 * @return true if this succeeded
 	 */
 	public boolean setVisible(boolean visible) {
-		return WindowUtils.ShowWindow(hwnd, visible ? SW_SHOW : SW_HIDE);
+		return WindowUtils.ShowWindow(handle, visible ? SW_SHOW : SW_HIDE);
 	}
 	
 	/**
@@ -80,15 +80,18 @@ public class NativeWindow {
 	 * @return true if this window is visible
 	 */
 	public boolean isVisible() {
-		return WindowUtils.IsWindowVisible(hwnd);
+		return WindowUtils.IsWindowVisible(handle);
 	}
 	
-	public int getHwnd() {
-		return hwnd;
+	/**
+	 * @return the window handle (hwnd on Windows, Window object casted to int in x11)
+	 */
+	public int getHandle() {
+		return handle;
 	}
 	
 	public boolean setRectangle(Rectangle rect) {
-		return WindowUtils.MoveWindow(hwnd, rect.x, rect.y, rect.width, rect.height, true);
+		return WindowUtils.MoveWindow(handle, rect.x, rect.y, rect.width, rect.height, true);
 	}
 
 	/**
@@ -107,18 +110,18 @@ public class NativeWindow {
 	 * @return true if this operation succeeded
 	 */
 	public boolean setTitle(String title) {
-		return WindowUtils.SetWindowTextA(hwnd, title);
+		return WindowUtils.SetWindowTextA(handle, title);
 	}
 
 	/**
 	 * @return the title of this window
 	 */
 	public String getTitle() {	
-		return WindowUtils.GetWindowText(hwnd);
+		return WindowUtils.GetWindowText(handle);
 	}
 	
 	public String getProcess() {
-		return WindowUtils.getProcessFromWindow(hwnd);
+		return WindowUtils.getProcessFromWindow(handle);
 	}
 	
 	/**
@@ -131,7 +134,7 @@ public class NativeWindow {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("NativeWindow[Hwnd=").append(getHwnd());
+		builder.append("NativeWindow[Hwnd=").append(getHandle());
 		builder.append(", Title=").append(getTitle());
 		builder.append(", Process=").append(getProcess());
 		builder.append(", Minimized=").append(isMinimized());
