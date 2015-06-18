@@ -27,10 +27,6 @@ JNIEXPORT jstring JNICALL Java_nativewindowlib_WindowUtils_getWindowText(JNIEnv 
 }
 
 JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_setWindowText(JNIEnv * env, jclass z, jint handle, jstring title) {
-	SetWindowTextA(handle, getcstring(env, title));
-}
-
-static BOOL CALLBACK EnumWindowsCallback(HWND handle, LPARAM LPARAM) {
 
 }
 
