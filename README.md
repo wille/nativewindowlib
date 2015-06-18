@@ -1,6 +1,8 @@
 # nativewindowlib
 
-Small library for working with native windows in Windows using JNA
+Small library for working with native windows in Windows using JNI
+
+Fork of this project can be found [here](https://github.com/U2ForMeJava/nativewindowlib) which has contributed alot to the developement
 
 ## Examples
 
