@@ -5,27 +5,27 @@
 #include "../nativewindowlib_WindowUtils.h"
 #include "../util.h"
 
-JNIEXPORT void JNICALL Java_nativewindowlib_WindowUtil_ShowWindow(JNIEnv * env, jclass z, jint hwnd, jint mode) {
-	HWND handle = (HWND) hwnd;
+JNIEXPORT void JNICALL Java_nativewindowlib_WindowUtil_ShowWindow(JNIEnv * env, jclass z, jint handle, jint mode) {
+	HWND hwnd = (HWND) handle;
 
-	ShowWindow(handle, mode);
+	ShowWindow(hwnd, mode);
 }
 
-JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_GetTopWindow(JNIEnv * env, jclass z, jint hwnd) {
-	return GetTopWindow(hwnd);
+JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_GetTopWindow(JNIEnv * env, jclass z, jint handle) {
+	return GetTopWindow(handle);
 }
 
-JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_GetWindow(JNIEnv * env, jclass z, jint hwnd, jint mode) {
-	return GetWindow(hwnd, mode);
+JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_GetWindow(JNIEnv * env, jclass z, jint handle, jint mode) {
+	return GetWindow(handle, mode);
 }
 
-JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_IsWindowVisible(JNIEnv * env, jclass z, jint hwnd) {
-	return IsWindowVisible(hwnd);
+JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_IsWindowVisible(JNIEnv * env, jclass z, jint handle) {
+	return IsWindowVisible(handle);
 }
 
-JNIEXPORT jstring JNICALL Java_nativewindowlib_WindowUtils_GetWindowText(JNIEnv * env, jclass z, jint hwnd) {
-	HWND handle = (HWND) hwnd;
-	if (handle <= 0) {
+JNIEXPORT jstring JNICALL Java_nativewindowlib_WindowUtils_GetWindowText(JNIEnv * env, jclass z, jint handle) {
+	HWND hwnd = (HWND) handle;
+	if (hwnd <= 0) {
 		return getstring(env, "");
 	}
 
@@ -35,14 +35,14 @@ JNIEXPORT jstring JNICALL Java_nativewindowlib_WindowUtils_GetWindowText(JNIEnv 
 	}
 
 	LPSTR buffer = (LPSTR) malloc(length * sizeof(TCHAR));
-	GetWindowTextA(handle, buffer, length + 1);
+	GetWindowTextA(hwnd, buffer, length + 1);
 	jstring title = getstring(env, buffer);
 	free(buffer);
 
 	return title;
 }
 
-static BOOL CALLBACK EnumWindowsCallback(HWND HWND, LPARAM LPARAM) {
+static BOOL CALLBACK EnumWindowsCallback(HWND handle, LPARAM LPARAM) {
 	JNIEnv *env = (JNIEnv *) LPARAM;
 
 	jmethodID method;
@@ -52,7 +52,7 @@ static BOOL CALLBACK EnumWindowsCallback(HWND HWND, LPARAM LPARAM) {
 
 	method = (*env)->GetStaticMethodID(env, cls, "callback", "(I)V");
 
-	(*env)->CallStaticVoidMethod(env, cls, method, (int) HWND);
+	(*env)->CallStaticVoidMethod(env, cls, method, (int) handle);
 
 	return TRUE;
 }
@@ -62,12 +62,12 @@ JNIEXPORT void JNICALL Java_nativewindowlib_WindowUtils_enumWindows(JNIEnv * env
 	EnumWindowsCallback(nativewindowlib_WindowUtils_CALLBACK_COMPLETED, env);
 }
 
-JNIEXPORT jstring JNICALL Java_nativewindowlib_WindowUtils_getProcessFromWindow(JNIEnv * env, jclass z, jint hwnd) {
-	HWND handle = (HWND) hwnd;
+JNIEXPORT jstring JNICALL Java_nativewindowlib_WindowUtils_getProcessFromWindow(JNIEnv * env, jclass z, jint handle) {
+	HWND hwnd = (HWND) handle;
 
 	LPSTR buffer = (LPSTR) malloc(MAX_PATH * sizeof(TCHAR));
 	DWORD processId;
-	GetWindowThreadProcessId(handle, &processId);
+	GetWindowThreadProcessId(hwnd, &processId);
 	HANDLE hndl = OpenProcess(1040, FALSE, processId);
 	GetModuleFileNameExA(hndl, 0, buffer, MAX_PATH);
 	jstring process = getstring(env, buffer);
