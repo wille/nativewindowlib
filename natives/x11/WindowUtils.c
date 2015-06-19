@@ -149,18 +149,22 @@ JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_getFromTitle(JNIEnv * en
 		char* ltitle = getwindowname(disp, window);
 
 		if (strcmp(ctitle, ltitle)) {
+			XFree(list);
+			XCloseDisplay(disp);
+
 			return (int) window;
 		}
 	}
 
 	XFree(list);
-
 	XCloseDisplay(disp);
 
 	return 0;
 }
 
 JNIEXPORT jobject JNICALL Java_nativewindowlib_WindowUtils_getWindowRect(JNIEnv * env, jclass z, jint handle) {
+	Window window = getWindow(handle);
+
 	return NULL;
 }
 
