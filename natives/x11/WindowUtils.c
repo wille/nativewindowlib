@@ -92,7 +92,13 @@ JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_isWindowVisible(JNIE
 JNIEXPORT jstring JNICALL Java_nativewindowlib_WindowUtils_getWindowText(JNIEnv * env, jclass z, jint handle) {
 	Window window = getWindow(handle);
 
-	return getstring(env, winame(XOpenDisplay(NULL), window));
+	Display *disp = XOpenDisplay(NULL);
+
+	jstring title = getstring(env, winame(disp, window));
+
+	XCloseDisplay(disp);
+
+	return title;
 }
 
 JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_setWindowText(JNIEnv * env, jclass z, jint handle, jstring title) {
