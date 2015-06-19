@@ -9,30 +9,6 @@
 #include "../nativewindowlib_WindowUtils.h"
 #include "../util.h"
 
-JNIEXPORT void JNICALL Java_nativewindowlib_WindowUtil_showWindow(JNIEnv * env, jclass z, jint handle, jint mode) {
-
-}
-
-JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_getTopWindow(JNIEnv * env, jclass z, jint handle) {
-	return 0;
-}
-
-JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_getWindow(JNIEnv * env, jclass z, jint handle, jint mode) {
-	return 0;
-}
-
-JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_isWindowVisible(JNIEnv * env, jclass z, jint handle) {
-	return JNI_FALSE;
-}
-
-JNIEXPORT jstring JNICALL Java_nativewindowlib_WindowUtils_getWindowText(JNIEnv * env, jclass z, jint handle) {
-	return getstring(env, "");
-}
-
-JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_setWindowText(JNIEnv * env, jclass z, jint handle, jstring title) {
-	return JNI_FALSE;
-}
-
 
 Window *winlist (Display *disp, unsigned long *len) {
 	Atom prop = XInternAtom(disp,"_NET_CLIENT_LIST",False), type;
@@ -62,6 +38,65 @@ char *winame (Display *disp, Window win) {
 	}
 
 	return (char*)list;
+}
+
+Window getWindow(int handle) {
+	int i;
+	unsigned long len;
+	Display *disp = XOpenDisplay(NULL);
+	Window *list;
+	char *name;
+
+	if (!disp) {
+		return NULL;
+	}
+
+	list = (Window*)winlist(disp,&len);
+
+	Window root = list[0];
+
+	for (i=1;i<(int)len;i++) {
+		Window window = list[i];
+
+		if ((int) window == handle) {
+			XFree(list);
+			XCloseDisplay(disp);
+
+			return window;
+		}
+	}
+
+	XFree(list);
+
+	XCloseDisplay(disp);
+
+	return NULL;
+}
+
+JNIEXPORT void JNICALL Java_nativewindowlib_WindowUtil_showWindow(JNIEnv * env, jclass z, jint handle, jint mode) {
+
+}
+
+JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_getTopWindow(JNIEnv * env, jclass z, jint handle) {
+	return 0;
+}
+
+JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_getWindow(JNIEnv * env, jclass z, jint handle, jint mode) {
+	return 0;
+}
+
+JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_isWindowVisible(JNIEnv * env, jclass z, jint handle) {
+	return JNI_TRUE;
+}
+
+JNIEXPORT jstring JNICALL Java_nativewindowlib_WindowUtils_getWindowText(JNIEnv * env, jclass z, jint handle) {
+	Window window = getWindow(handle);
+
+	return getstring(env, winame(XOpenDisplay(NULL), window));
+}
+
+JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_setWindowText(JNIEnv * env, jclass z, jint handle, jstring title) {
+	return JNI_FALSE;
 }
 
 JNIEXPORT void JNICALL Java_nativewindowlib_WindowUtils_enumWindows(JNIEnv * env, jclass z) {
