@@ -1,3 +1,5 @@
+#include "../os.h"
+
 #ifdef WINDOWS
 
 #include <windows.h>
@@ -6,7 +8,6 @@
 
 #include "../nativewindowlib_WindowUtils.h"
 #include "../util.h"
-#include "../os.h"
 
 JNIEXPORT void JNICALL Java_nativewindowlib_WindowUtil_showWindow(JNIEnv * env, jclass z, jint handle, jint mode) {
 	HWND hwnd = (HWND) handle;
