@@ -4,6 +4,7 @@
 
 #include <jni.h>
 #include <X11/Xlib.h>
+#include <X11/Xatom.h>
 
 #include "../nativewindowlib_WindowUtils.h"
 #include "../util.h"
@@ -13,23 +14,23 @@ JNIEXPORT void JNICALL Java_nativewindowlib_WindowUtil_showWindow(JNIEnv * env, 
 }
 
 JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_getTopWindow(JNIEnv * env, jclass z, jint handle) {
-
+	return 0;
 }
 
 JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_getWindow(JNIEnv * env, jclass z, jint handle, jint mode) {
-
+	return 0;
 }
 
 JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_isWindowVisible(JNIEnv * env, jclass z, jint handle) {
-
+	return JNI_FALSE;
 }
 
 JNIEXPORT jstring JNICALL Java_nativewindowlib_WindowUtils_getWindowText(JNIEnv * env, jclass z, jint handle) {
-
+	return getstring(env, "");
 }
 
 JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_setWindowText(JNIEnv * env, jclass z, jint handle, jstring title) {
-
+	return JNI_FALSE;
 }
 
 
@@ -39,7 +40,6 @@ Window *winlist (Display *disp, unsigned long *len) {
 	unsigned long remain;
 	unsigned char *list;
 
-	errno = 0;
 	if (XGetWindowProperty(disp,XDefaultRootWindow(disp),prop,0,1024,False,XA_WINDOW,
 					&type,&form,len,&remain,&list) != Success) {
 		perror("winlist() -- GetWinProp");
@@ -55,7 +55,6 @@ char *winame (Display *disp, Window win) {
 	unsigned long remain, len;
 	unsigned char *list;
 
-	errno = 0;
 	if (XGetWindowProperty(disp,win,prop,0,1024,False,XA_STRING,
 					&type,&form,&len,&remain,&list) != Success) {
 		perror("winlist() -- GetWinProp");
@@ -74,7 +73,7 @@ JNIEXPORT void JNICALL Java_nativewindowlib_WindowUtils_enumWindows(JNIEnv * env
 
 	if (!disp) {
 		puts("no display!");
-		return -1;
+		callback(env, nativewindowlib_WindowUtils_CALLBACK_COMPLETED);
 	}
 
 	list = (Window*)winlist(disp,&len);
@@ -94,39 +93,39 @@ JNIEXPORT void JNICALL Java_nativewindowlib_WindowUtils_enumWindows(JNIEnv * env
 }
 
 JNIEXPORT jstring JNICALL Java_nativewindowlib_WindowUtils_getProcessFromWindow(JNIEnv * env, jclass z, jint handle) {
-
+	return getstring(env, "");
 }
 
 JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_getFromTitle(JNIEnv * env, jclass z, jstring title) {
-
+	return 0;
 }
 
 JNIEXPORT jobject JNICALL Java_nativewindowlib_WindowUtils_getWindowRect(JNIEnv * env, jclass z, jint handle) {
-
+	return NULL;
 }
 
 JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_moveWindow(JNIEnv * env, jclass z, jint handle, jint x, jint y, jint width, jint height) {
-
+	return JNI_FALSE;
 }
 
 JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_setForegroundWindow(JNIEnv * env, jclass z, jint handle) {
-
+	return JNI_FALSE;
 }
 
 JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_closeWindow(JNIEnv * env, jclass z, jint handle) {
-
+	return JNI_FALSE;
 }
 
 JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_destroyWindow(JNIEnv * env, jclass z, jint handle) {
-
+	return JNI_FALSE;
 }
 
 JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_showWindow(JNIEnv * env, jclass z, jint handle, jint nCmdShow) {
-
+	return JNI_FALSE;
 }
 
 JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_getForegroundWindow(JNIEnv * env, jclass z) {
-
+	return 0;
 }
 
 #endif
