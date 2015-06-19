@@ -55,7 +55,7 @@ Window getWindow(int handle) {
 
 	Window root = list[0];
 
-	for (i=1;i<(int)len;i++) {
+	for (i = 1; i < (int) len; i++) {
 		Window window = list[i];
 
 		if ((int) window == handle) {
