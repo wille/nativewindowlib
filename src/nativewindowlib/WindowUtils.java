@@ -10,7 +10,9 @@ public final class WindowUtils {
 	
 	private static final List<Integer> WINDOW_HANDLES = new ArrayList<Integer>();
 
-	public static final int CALLBACK_COMPLETED = -1;
+	public static final int CALLBACK_COMPLETED = 0;
+	public static final int CALLBACK_FAILED = 1;
+
 	public static final int GW_HWNDNEXT = 2;
 
 	public static synchronized List<NativeWindow> getWindows() {
@@ -54,7 +56,7 @@ public final class WindowUtils {
 	 * @param handle the window handle
 	 */
 	private static void callback(int handle) {
-		if (handle == CALLBACK_COMPLETED) {
+		if (handle == CALLBACK_COMPLETED || handle == CALLBACK_FAILED) {
 			Thread.currentThread().interrupt();
 		} else {
 			WINDOW_HANDLES.add(handle);

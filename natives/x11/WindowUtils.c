@@ -25,7 +25,7 @@ Window *winlist (Display *disp, unsigned long *len) {
 	return (Window*)list;
 }
 
-char *winame (Display *disp, Window win) {
+char *getwindowname(Display *disp, Window win) {
 	Atom prop = XInternAtom(disp,"WM_NAME",False), type;
 	int form;
 	unsigned long remain, len;
@@ -45,15 +45,12 @@ Window getWindow(int handle) {
 	unsigned long len;
 	Display *disp = XOpenDisplay(NULL);
 	Window *list;
-	char *name;
 
 	if (!disp) {
 		return NULL;
 	}
 
 	list = (Window*)winlist(disp,&len);
-
-	Window root = list[0];
 
 	for (i = 1; i < (int) len; i++) {
 		Window window = list[i];
@@ -94,7 +91,7 @@ JNIEXPORT jstring JNICALL Java_nativewindowlib_WindowUtils_getWindowText(JNIEnv 
 
 	Display *disp = XOpenDisplay(NULL);
 
-	jstring title = getstring(env, winame(disp, window));
+	jstring title = getstring(env, getwindowname(disp, window));
 
 	XCloseDisplay(disp);
 
@@ -110,16 +107,12 @@ JNIEXPORT void JNICALL Java_nativewindowlib_WindowUtils_enumWindows(JNIEnv * env
 	unsigned long len;
 	Display *disp = XOpenDisplay(NULL);
 	Window *list;
-	char *name;
 
 	if (!disp) {
-		puts("no display!");
-		callback(env, nativewindowlib_WindowUtils_CALLBACK_COMPLETED);
+		callback(env, nativewindowlib_WindowUtils_CALLBACK_FAILED);
 	}
 
 	list = (Window*)winlist(disp,&len);
-
-	Window root = list[0];
 
 	for (i=1;i<(int)len;i++) {
 		Window window = list[i];

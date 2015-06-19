@@ -8,7 +8,9 @@
 extern "C" {
 #endif
 #undef nativewindowlib_WindowUtils_CALLBACK_COMPLETED
-#define nativewindowlib_WindowUtils_CALLBACK_COMPLETED -1L
+#define nativewindowlib_WindowUtils_CALLBACK_COMPLETED 0L
+#undef nativewindowlib_WindowUtils_CALLBACK_FAILED
+#define nativewindowlib_WindowUtils_CALLBACK_FAILED 1L
 #undef nativewindowlib_WindowUtils_GW_HWNDNEXT
 #define nativewindowlib_WindowUtils_GW_HWNDNEXT 2L
 /*
@@ -77,10 +79,10 @@ JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_getTopWindow
 
 /*
  * Class:     nativewindowlib_WindowUtils
- * Method:    setWindow
+ * Method:    getWindow
  * Signature: (II)I
  */
-JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_setWindow
+JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_getWindow
   (JNIEnv *, jclass, jint, jint);
 
 /*
