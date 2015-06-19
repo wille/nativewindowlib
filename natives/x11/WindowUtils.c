@@ -1,10 +1,10 @@
+#ifdef X11
+
 #include <jni.h>
 
 #include "../nativewindowlib_WindowUtils.h"
 #include "../util.h"
 #include "../os.h"
-
-#ifdef X11
 
 JNIEXPORT void JNICALL Java_nativewindowlib_WindowUtil_showWindow(JNIEnv * env, jclass z, jint handle, jint mode) {
 
