@@ -165,7 +165,19 @@ JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_getFromTitle(JNIEnv * en
 JNIEXPORT jobject JNICALL Java_nativewindowlib_WindowUtils_getWindowRect(JNIEnv * env, jclass z, jint handle) {
 	Window window = getWindow(handle);
 
-	return NULL;
+	Display *disp = XOpenDisplay(NULL);
+
+	XWindowAttributes attr;
+	XGetWindowAttributes(disp, window, &attr);
+
+	XCloseDisplay(disp);
+
+	int x = attr.x;
+	int y = attr.y;
+	int width = attr.width;
+	int height = attr.height;
+
+	return getrect(env, x, y, width, height);
 }
 
 JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_moveWindow(JNIEnv * env, jclass z, jint handle, jint x, jint y, jint width, jint height) {
