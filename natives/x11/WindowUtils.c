@@ -18,7 +18,6 @@ Window *winlist (Display *disp, unsigned long *len) {
 
 	if (XGetWindowProperty(disp,XDefaultRootWindow(disp),prop,0,1024,False,XA_WINDOW,
 					&type,&form,len,&remain,&list) != Success) {
-		perror("winlist() -- GetWinProp");
 		return 0;
 	}
 
@@ -103,7 +102,6 @@ JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_setWindowText(JNIEnv
 }
 
 JNIEXPORT void JNICALL Java_nativewindowlib_WindowUtils_enumWindows(JNIEnv * env, jclass z) {
-	int i;
 	unsigned long len;
 	Display *disp = XOpenDisplay(NULL);
 	Window *list;
@@ -114,7 +112,8 @@ JNIEXPORT void JNICALL Java_nativewindowlib_WindowUtils_enumWindows(JNIEnv * env
 
 	list = (Window*)winlist(disp,&len);
 
-	for (i=1;i<(int)len;i++) {
+	int i;
+	for (i = 1; i < (int) len; i++) {
 		Window window = list[i];
 		callback(env, (int) window);
 	}
@@ -131,6 +130,33 @@ JNIEXPORT jstring JNICALL Java_nativewindowlib_WindowUtils_getProcessFromWindow(
 }
 
 JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_getFromTitle(JNIEnv * env, jclass z, jstring title) {
+	unsigned long len;
+	Display *disp = XOpenDisplay(NULL);
+	Window *list;
+
+	if (!disp) {
+		return 0;
+	}
+
+	list = (Window*) winlist(disp, &len);
+
+	char* ctitle = getcstring(env, title);
+
+	int i;
+	for (i = 1; i < (int) len; i++) {
+		Window window = list[i];
+
+		char* ltitle = getwindowname(disp, window);
+
+		if (strcmp(ctitle, ltitle)) {
+			return (int) window;
+		}
+	}
+
+	XFree(list);
+
+	XCloseDisplay(disp);
+
 	return 0;
 }
 
