@@ -197,7 +197,7 @@ JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_minimizeWindow(JNIEn
 
 	XCloseDisplay(disp);
 
-	return status != 0; // Returns non zero value if successfulg
+	return status != 0; // Returns non zero value if successful
 }
 
 JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_showWindow(JNIEnv * env, jclass z, jint handle, jint nCmdShow) {
