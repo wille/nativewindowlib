@@ -6,6 +6,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import libloader.GlobalLibraries;
+import libloader.ResourceLibrary;
+
+import com.redpois0n.oslib.Arch;
+import com.redpois0n.oslib.OperatingSystem;
+
 public final class WindowUtils {
 	
 	private static final List<Integer> WINDOW_HANDLES = new ArrayList<Integer>();
@@ -14,6 +20,22 @@ public final class WindowUtils {
 	public static final int CALLBACK_FAILED = 1;
 
 	public static final int GW_HWNDNEXT = 2;
+
+	static {
+		ResourceLibrary win32_64 = new ResourceLibrary("natives/nativewindowlib_64.dll", OperatingSystem.WINDOWS, Arch.x86_64);
+		ResourceLibrary win32_32 = new ResourceLibrary("natives/nativewindowlib_32.dll", OperatingSystem.WINDOWS, Arch.x86);
+		
+		GlobalLibraries.addLibrary(win32_32);
+		GlobalLibraries.addLibrary(win32_64);
+		
+		ResourceLibrary linux_64 = new ResourceLibrary("natives/nativewindowlib_64.so", OperatingSystem.LINUX, Arch.x86_64);
+		ResourceLibrary linux_32 = new ResourceLibrary("natives/nativewindowlib_32.so", OperatingSystem.LINUX, Arch.x86);
+		
+		GlobalLibraries.addLibrary(linux_32);
+		GlobalLibraries.addLibrary(linux_64);
+		
+		GlobalLibraries.loadLibraries();
+	}
 	
 	public static synchronized List<NativeWindow> getWindows() {
 		final List<NativeWindow> inflList = new ArrayList<NativeWindow>();
