@@ -177,7 +177,15 @@ JNIEXPORT jobject JNICALL Java_nativewindowlib_WindowUtils_getWindowRect(JNIEnv 
 }
 
 JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_moveWindow(JNIEnv * env, jclass z, jint handle, jint x, jint y, jint width, jint height) {
-	return JNI_FALSE;
+	Window window = getWindow(window);
+
+	Display *disp = XOpenDisplay(NULL);
+
+	Status result = XMoveResizeWindow(disp, window, x, y, width, height)
+
+	XCloseDisplay(disp);
+
+	return result != 0; // ??
 }
 
 JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_setForegroundWindow(JNIEnv * env, jclass z, jint handle) {
