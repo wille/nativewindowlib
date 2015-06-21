@@ -195,7 +195,7 @@ JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_minimizeWindow(JNIEn
 
 	Status status = XIconifyWindow(disp, window, 0);
 
-	XCloseDisplay(NULL);
+	XCloseDisplay(disp);
 
 	return status != 0; // Returns non zero value if successfulg
 }
