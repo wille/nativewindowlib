@@ -1,2 +1,2 @@
-#define WINDOWS
-// #define X11
+//#define WINDOWS
+#define X11

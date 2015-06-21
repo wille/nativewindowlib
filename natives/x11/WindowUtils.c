@@ -192,7 +192,7 @@ JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_closeWindow(JNIEnv *
 	return JNI_FALSE;
 }
 
-JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_destroyWindow(JNIEnv * env, jclass z, jint handle) {
+JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_minimizeWindow(JNIEnv * env, jclass z, jint handle) {
 	return JNI_FALSE;
 }
 

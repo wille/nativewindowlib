@@ -102,11 +102,11 @@ JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_setForegroundWindow(
 	return SetForegroundWindow(handle);
 }
 
-JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_closeWindow(JNIEnv * env, jclass z, jint handle) {
+JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_minimizeWindow(JNIEnv * env, jclass z, jint handle) {
 	return CloseWindow(handle);
 }
 
-JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_destroyWindow(JNIEnv * env, jclass z, jint handle) {
+JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_closeWindow(JNIEnv * env, jclass z, jint handle) {
 	return DestroyWindow(handle);
 }
 

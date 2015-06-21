@@ -36,7 +36,7 @@ public class NativeWindow {
 	 * @return true if this succeeded
 	 */
 	public boolean close() {
-		return WindowUtils.destroyWindow(handle);
+		return WindowUtils.closeWindow(handle);
 	}
 	
 	/**
@@ -44,7 +44,7 @@ public class NativeWindow {
 	 * @return true if this succeeded
 	 */
 	public boolean minimize() {
-		return WindowUtils.closeWindow(handle);
+		return WindowUtils.minimizeWindow(handle);
 	}
 	
 	/**

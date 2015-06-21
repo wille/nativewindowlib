@@ -95,18 +95,18 @@ JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_setForegroundWindow
 
 /*
  * Class:     nativewindowlib_WindowUtils
- * Method:    closeWindow
+ * Method:    minimizeWindow
  * Signature: (I)Z
  */
-JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_closeWindow
+JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_minimizeWindow
   (JNIEnv *, jclass, jint);
 
 /*
  * Class:     nativewindowlib_WindowUtils
- * Method:    destroyWindow
+ * Method:    closeWindow
  * Signature: (I)Z
  */
-JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_destroyWindow
+JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_closeWindow
   (JNIEnv *, jclass, jint);
 
 /*

@@ -173,7 +173,7 @@ public final class WindowUtils {
 	 * @param handle
 	 * @return
 	 */
-	public static native boolean closeWindow(int handle);
+	public static native boolean minimizeWindow(int handle);
 
 	/**
 	 * Closes the window
@@ -181,7 +181,7 @@ public final class WindowUtils {
 	 * @param handle
 	 * @return
 	 */
-	public static native boolean destroyWindow(int handle);
+	public static native boolean closeWindow(int handle);
 
 	/**
 	 * Changes state of the window
