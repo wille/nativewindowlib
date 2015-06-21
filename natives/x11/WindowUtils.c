@@ -207,6 +207,8 @@ JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_showWindow(JNIEnv * 
 
 	Status status = XMapWindow(disp, window);
 
+	XCloseDisplay(disp);
+
 	return status != 0; // ?
 }
 
