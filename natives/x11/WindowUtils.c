@@ -201,11 +201,17 @@ JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_minimizeWindow(JNIEn
 
 	XCloseDisplay(NULL);
 
-	return status != 0;
+	return status != 0; // Returns non zero value if successfulg
 }
 
 JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_showWindow(JNIEnv * env, jclass z, jint handle, jint nCmdShow) {
-	return JNI_FALSE;
+	Window window = getWindow(handle);
+
+	Display *disp = XOpenDisplay(NULL);
+
+	Status status = XMapWindow(disp, window);
+
+	return status != 0; // ?
 }
 
 JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_getForegroundWindow(JNIEnv * env, jclass z) {
