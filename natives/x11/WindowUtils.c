@@ -29,7 +29,6 @@ char *getwindowname(Display *disp, Window win) {
 	unsigned char *list;
 
 	if (XGetWindowProperty(disp, win, prop, 0, 1024, False, XA_STRING, &type, &form, &len, &remain, &list) != Success) {
-		perror("winlist() -- GetWinProp");
 		return NULL;
 	}
 
