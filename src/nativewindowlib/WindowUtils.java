@@ -14,7 +14,7 @@ public final class WindowUtils {
 	public static final int CALLBACK_FAILED = 1;
 
 	public static final int GW_HWNDNEXT = 2;
-
+	
 	public static synchronized List<NativeWindow> getWindows() {
 		final List<NativeWindow> inflList = new ArrayList<NativeWindow>();
 		final List<Integer> order = new ArrayList<Integer>();
@@ -120,6 +120,10 @@ public final class WindowUtils {
 	 * @return
 	 */
 	public static native Rectangle getWindowRect(int handle);
+	
+	public static boolean moveWindow(int handle, Rectangle rect) {
+		return moveWindow(handle, rect.x, rect.y, rect.width, rect.height);
+	}
 
 	/**
 	 * Moves window position
