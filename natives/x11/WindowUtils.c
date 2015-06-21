@@ -193,7 +193,15 @@ JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_closeWindow(JNIEnv *
 }
 
 JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_minimizeWindow(JNIEnv * env, jclass z, jint handle) {
-	return JNI_FALSE;
+	Window window = getWindow(handle);
+
+	Display *disp = XOpenDisplay(NULL);
+
+	Status status = XIconifyWindow(disp, window, 0);
+
+	XCloseDisplay(NULL);
+
+	return status != 0;
 }
 
 JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_showWindow(JNIEnv * env, jclass z, jint handle, jint nCmdShow) {
