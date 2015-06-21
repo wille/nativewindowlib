@@ -9,34 +9,31 @@
 #include "../nativewindowlib_WindowUtils.h"
 #include "../util.h"
 
-
-Window *winlist (Display *disp, unsigned long *len) {
-	Atom prop = XInternAtom(disp,"_NET_CLIENT_LIST",False), type;
+Window *winlist(Display *disp, unsigned long *len) {
+	Atom prop = XInternAtom(disp, "_NET_CLIENT_LIST", False), type;
 	int form;
 	unsigned long remain;
 	unsigned char *list;
 
-	if (XGetWindowProperty(disp,XDefaultRootWindow(disp),prop,0,1024,False,XA_WINDOW,
-					&type,&form,len,&remain,&list) != Success) {
+	if (XGetWindowProperty(disp, XDefaultRootWindow(disp), prop, 0, 1024, False, XA_WINDOW, &type, &form, len, &remain, &list) != Success) {
 		return 0;
 	}
 
-	return (Window*)list;
+	return (Window*) list;
 }
 
 char *getwindowname(Display *disp, Window win) {
-	Atom prop = XInternAtom(disp,"WM_NAME",False), type;
+	Atom prop = XInternAtom(disp, "WM_NAME", False), type;
 	int form;
 	unsigned long remain, len;
 	unsigned char *list;
 
-	if (XGetWindowProperty(disp,win,prop,0,1024,False,XA_STRING,
-					&type,&form,&len,&remain,&list) != Success) {
+	if (XGetWindowProperty(disp, win, prop, 0, 1024, False, XA_STRING, &type, &form, &len, &remain, &list) != Success) {
 		perror("winlist() -- GetWinProp");
 		return NULL;
 	}
 
-	return (char*)list;
+	return (char*) list;
 }
 
 Window getWindow(int handle) {
@@ -49,7 +46,7 @@ Window getWindow(int handle) {
 		return NULL;
 	}
 
-	list = (Window*)winlist(disp,&len);
+	list = (Window*) winlist(disp, &len);
 
 	for (i = 1; i < (int) len; i++) {
 		Window window = list[i];
@@ -110,7 +107,7 @@ JNIEXPORT void JNICALL Java_nativewindowlib_WindowUtils_enumWindows(JNIEnv * env
 		callback(env, nativewindowlib_WindowUtils_CALLBACK_FAILED);
 	}
 
-	list = (Window*)winlist(disp,&len);
+	list = (Window*) winlist(disp, &len);
 
 	int i;
 	for (i = 1; i < (int) len; i++) {
