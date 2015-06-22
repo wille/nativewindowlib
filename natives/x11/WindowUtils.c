@@ -1,5 +1,3 @@
-#include "../os.h"
-
 #ifdef X11
 
 #include <jni.h>
