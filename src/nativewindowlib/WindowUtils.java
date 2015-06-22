@@ -41,14 +41,6 @@ public final class WindowUtils {
 		final List<NativeWindow> inflList = new ArrayList<NativeWindow>();
 		final List<Integer> order = new ArrayList<Integer>();
 
-		int top = getTopWindow(0);
-
-		while (top != 0) {
-			order.add(top);
-			top = getWindow(top, GW_HWNDNEXT);
-			inflList.add(new NativeWindow(top));
-		}
-
 		try {
 			enumWindows();
 
