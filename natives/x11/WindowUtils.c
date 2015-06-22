@@ -1,4 +1,4 @@
-#ifdef X11
+#ifndef _WIN32
 
 #include <jni.h>
 #include <X11/Xlib.h>
