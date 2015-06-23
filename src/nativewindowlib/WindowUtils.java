@@ -192,6 +192,14 @@ public final class WindowUtils {
 	 * @return
 	 */
 	public static native boolean minimizeWindow(int handle);
+	
+	/**
+	 * Checks if this window is minimized or not
+	 * 
+	 * @param handle
+	 * @return
+	 */
+	public static native boolean isMinimized(int handle);
 
 	/**
 	 * Closes the window

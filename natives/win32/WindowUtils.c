@@ -104,6 +104,13 @@ JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_minimizeWindow(JNIEn
 	return CloseWindow(handle);
 }
 
+JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_isMinimized(JNIEnv * env, jclass z, jint handle) {
+	RECT rect;
+	GetWindowRect(handle, &rect);
+
+	return rect.left <= -32000 && rect.top <= -32000;
+}
+
 JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_closeWindow(JNIEnv * env, jclass z, jint handle) {
 	return DestroyWindow(handle);
 }

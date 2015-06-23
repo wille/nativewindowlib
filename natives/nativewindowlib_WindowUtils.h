@@ -103,6 +103,14 @@ JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_minimizeWindow
 
 /*
  * Class:     nativewindowlib_WindowUtils
+ * Method:    isMinimized
+ * Signature: (I)Z
+ */
+JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_isMinimized
+  (JNIEnv *, jclass, jint);
+
+/*
+ * Class:     nativewindowlib_WindowUtils
  * Method:    closeWindow
  * Signature: (I)Z
  */

@@ -206,6 +206,10 @@ JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_minimizeWindow(JNIEn
 	return status != 0; // Returns non zero value if successful
 }
 
+JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_isMinimized(JNIEnv * env, jclass z, jint handle) {
+	return JNI_FALSE;
+}
+
 JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_showWindow(JNIEnv * env, jclass z, jint handle, jint nCmdShow) {
 	Window window = getWindow(handle);
 

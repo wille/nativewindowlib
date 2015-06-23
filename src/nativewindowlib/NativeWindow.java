@@ -51,7 +51,7 @@ public class NativeWindow {
 	 * @return if this window is minimized or not
 	 */
 	public boolean isMinimized() {
-		return getRectangle().x <= -32000;
+		return WindowUtils.isMinimized(handle);
 	}
 	
 	/**
