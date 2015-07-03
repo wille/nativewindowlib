@@ -45,6 +45,8 @@ public final class WindowUtils {
 			enumWindows();
 
 			Thread.sleep(Long.MAX_VALUE);
+		} catch (UnsatisfiedLinkError e) {
+			e.printStackTrace();
 		} catch (InterruptedException e) {
 
 		}
