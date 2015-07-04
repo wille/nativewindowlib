@@ -179,7 +179,7 @@ JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_moveWindow(JNIEnv * 
 
 	Display *disp = XOpenDisplay(NULL);
 
-	Status result = XMoveResizeWindow(disp, window, x, y, width, height)
+	Status result = XMoveResizeWindow(disp, window, x, y, width, height);
 
 	XCloseDisplay(disp);
 
