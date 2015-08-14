@@ -92,34 +92,34 @@ JNIEXPORT jobject JNICALL Java_nativewindowlib_WindowUtils_getWindowRect(JNIEnv 
 	return getrect(env, x, y, width, height);
 }
 
-JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_moveWindow(JNIEnv * env, jclass z, jint handle, jint x, jint y, jint width, jint height) {
+JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_moveWindow(JNIEnv *env, jclass z, jint handle, jint x, jint y, jint width, jint height) {
 	return MoveWindow(handle, x, y, width, height, TRUE);
 }
 
-JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_setForegroundWindow(JNIEnv * env, jclass z, jint handle) {
+JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_setForegroundWindow(JNIEnv *env, jclass z, jint handle) {
 	return SetForegroundWindow(handle);
 }
 
-JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_minimizeWindow(JNIEnv * env, jclass z, jint handle) {
+JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_minimizeWindow(JNIEnv *env, jclass z, jint handle) {
 	return CloseWindow(handle);
 }
 
-JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_isMinimized(JNIEnv * env, jclass z, jint handle) {
+JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_isMinimized(JNIEnv *env, jclass z, jint handle) {
 	RECT rect;
 	GetWindowRect(handle, &rect);
 
 	return rect.left <= -32000 && rect.top <= -32000;
 }
 
-JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_closeWindow(JNIEnv * env, jclass z, jint handle) {
+JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_closeWindow(JNIEnv *env, jclass z, jint handle) {
 	return DestroyWindow(handle);
 }
 
-JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_showWindow(JNIEnv * env, jclass z, jint handle, jint nCmdShow) {
+JNIEXPORT jboolean JNICALL Java_nativewindowlib_WindowUtils_showWindow(JNIEnv *env, jclass z, jint handle, jint nCmdShow) {
 	return ShowWindow(handle, nCmdShow);
 }
 
-JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_getForegroundWindow(JNIEnv * env, jclass z) {
+JNIEXPORT jint JNICALL Java_nativewindowlib_WindowUtils_getForegroundWindow(JNIEnv *env, jclass z) {
 	return GetForegroundWindow();
 }
 
